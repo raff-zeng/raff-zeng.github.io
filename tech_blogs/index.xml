@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>raff Site</title>
-        <link>https://pikapika-zrf.github.io/</link>
-        <description>Recent content on raff Site</description>
+        <title>Tech_blogs on raff Site</title>
+        <link>http://localhost:1313/tech_blogs/</link>
+        <description>Recent content in Tech_blogs on raff Site</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <copyright>raff</copyright>
-        <lastBuildDate>Sat, 30 Nov 2024 21:50:00 +0800</lastBuildDate><atom:link href="https://pikapika-zrf.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 30 Nov 2024 21:50:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/tech_blogs/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>使用githubPage&#43;hugo无成本建立博客</title>
-        <link>https://pikapika-zrf.github.io/tech-blogs/hugo-start/</link>
+        <link>http://localhost:1313/tech_blogs/hugo-start/</link>
         <pubDate>Sat, 30 Nov 2024 21:50:00 +0800</pubDate>
         
-        <guid>https://pikapika-zrf.github.io/tech-blogs/hugo-start/</guid>
+        <guid>http://localhost:1313/tech_blogs/hugo-start/</guid>
         <description>&lt;h2 id=&#34;0-前言&#34;&gt;0 前言
 &lt;/h2&gt;&lt;p&gt;环境：ubuntu22.04&lt;/p&gt;
 &lt;ul&gt;
