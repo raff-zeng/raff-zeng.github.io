@@ -7,7 +7,16 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <copyright>raff</copyright>
-        <lastBuildDate>Sat, 30 Nov 2024 21:50:00 +0800</lastBuildDate><atom:link href="https://pikapika-zrf.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 30 Nov 2024 22:00:02 +0800</lastBuildDate><atom:link href="https://pikapika-zrf.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>About Me</title>
+        <link>https://pikapika-zrf.github.io/about/about/</link>
+        <pubDate>Sat, 30 Nov 2024 22:00:02 +0800</pubDate>
+        
+        <guid>https://pikapika-zrf.github.io/about/about/</guid>
+        <description>&lt;p&gt;TODO&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>使用githubPage&#43;hugo无成本建立博客</title>
         <link>https://pikapika-zrf.github.io/tech-blogs/hugo-start/</link>
         <pubDate>Sat, 30 Nov 2024 21:50:00 +0800</pubDate>
