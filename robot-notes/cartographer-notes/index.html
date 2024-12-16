@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="date = &lsquo;2024-11-30T21:50:00+08:00&rsquo; draft = true title = &lsquo;carographer notes&rsquo;\n+++\n0 前言 github：https://github.com/cartographer-project/cartographer 官方教程：https://google-cartographer.readthedocs.io/en/stable/index.html cartographer_ros github: https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file 官方教程：https://google-cartographer-ros.readthedocs.io/en/stable/ ros2 github：https://github.com/ros2/cartographer https://github.com/ros2/cartographer_ros https://zhuanlan.zhihu.com/p/526379828 安装\n1 案例 rosdepc install --from-paths src --ignore-src --rosdistro $ROS_DISTRO -r -y colcon build --parallel-workers 4 --cmake-clean-cache wget -P ~/Downloads https://storage.googleapis.com/cartographer-public-data/bags/backpack_2d/cartographer_paper_deutsches_museum.bag ros2 launch cartographer_ros demo_backpack_2d.launch.py bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 生成pbstream地图 roslaunch cartographer_ros offline_backpack_2d.launch bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 运行纯定位 roslaunch cartographer_ros demo_backpack_2d_localization.launch load_state_filename:=/source/MovingRobot_Sim/download/cartographer_paper_deutsches_museum.bag.pbstream bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag ">
 <title></title>
 
-<link rel='canonical' href='https://pikapika-zrf.github.io/robot-notes/cartographer-notes/'>
+<link rel='canonical' href='http://localhost:1313/robot-notes/cartographer-notes/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="">
 <meta property='og:description' content="date = &lsquo;2024-11-30T21:50:00+08:00&rsquo; draft = true title = &lsquo;carographer notes&rsquo;\n+++\n0 前言 github：https://github.com/cartographer-project/cartographer 官方教程：https://google-cartographer.readthedocs.io/en/stable/index.html cartographer_ros github: https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file 官方教程：https://google-cartographer-ros.readthedocs.io/en/stable/ ros2 github：https://github.com/ros2/cartographer https://github.com/ros2/cartographer_ros https://zhuanlan.zhihu.com/p/526379828 安装\n1 案例 rosdepc install --from-paths src --ignore-src --rosdistro $ROS_DISTRO -r -y colcon build --parallel-workers 4 --cmake-clean-cache wget -P ~/Downloads https://storage.googleapis.com/cartographer-public-data/bags/backpack_2d/cartographer_paper_deutsches_museum.bag ros2 launch cartographer_ros demo_backpack_2d.launch.py bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 生成pbstream地图 roslaunch cartographer_ros offline_backpack_2d.launch bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 运行纯定位 roslaunch cartographer_ros demo_backpack_2d_localization.launch load_state_filename:=/source/MovingRobot_Sim/download/cartographer_paper_deutsches_museum.bag.pbstream bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag ">
-<meta property='og:url' content='https://pikapika-zrf.github.io/robot-notes/cartographer-notes/'>
+<meta property='og:url' content='http://localhost:1313/robot-notes/cartographer-notes/'>
 <meta property='og:site_name' content='raff Site'>
 <meta property='og:type' content='article'><meta property='article:section' content='Robot-Notes' />
 <meta name="twitter:title" content="">
@@ -382,7 +382,7 @@ title = &lsquo;carographer notes&rsquo;</p>
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.3d77866ec2ca96ed309ef0db701e98ee686f9a7761045fe1a6fe807e12eacc91.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');

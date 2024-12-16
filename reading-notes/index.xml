@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Reading-Notes on raff Site</title>
-        <link>https://pikapika-zrf.github.io/reading-notes/</link>
+        <link>http://localhost:1313/reading-notes/</link>
         <description>Recent content in Reading-Notes on raff Site</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <copyright>raff</copyright>
-        <lastBuildDate>Mon, 16 Dec 2024 21:15:00 +0800</lastBuildDate><atom:link href="https://pikapika-zrf.github.io/reading-notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 16 Dec 2024 21:15:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/reading-notes/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>嵌入式面试</title>
-        <link>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95/</link>
+        <link>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95/</link>
         <pubDate>Mon, 16 Dec 2024 21:15:00 +0800</pubDate>
         
-        <guid>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95/</guid>
+        <guid>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95/</guid>
         <description>&lt;h1 id=&#34;c-八股&#34;&gt;C 八股
 &lt;/h1&gt;&lt;h3 id=&#34;1关键字register&#34;&gt;1、关键字register
 &lt;/h3&gt;&lt;p&gt;（1）作用：编译器会将register修饰的变量尽可能地放在CPU的寄存器中，以加快其存取速度，一般用于频繁使用的变量。&lt;/p&gt;
@@ -1720,7 +1720,7 @@ decltype不会像auto⼀样忽略引用和cv属性，decltype会保留表达式�
 &lt;p&gt;Linux 的虚拟地址空间是如何分布的？&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;在 Linux 操作系统中，虚拟地址空间的内部又被分为&lt;strong&gt;内核空间和用户空间&lt;/strong&gt;两部分，最常见的 32 位和 64 位系统，如下所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://pikapika-zrf.github.io/imgs/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95/embed_interview6.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/imgs/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95/embed_interview6.jpg&#34;
 	
 	
 	
@@ -1744,7 +1744,7 @@ decltype不会像auto⼀样忽略引用和cv属性，decltype会保留表达式�
 &lt;blockquote&gt;
 &lt;p&gt;用户空间分布的情况，以 32 位系统为例&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://pikapika-zrf.github.io/imgs/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95/embed_interview7.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/imgs/%E5%B5%8C%E5%85%A5%E5%BC%8F%E9%9D%A2%E8%AF%95/embed_interview7.jpg&#34;
 	
 	
 	
@@ -5412,10 +5412,10 @@ SPI接口一般使用四条信号线通信：&lt;/p&gt;
         </item>
         <item>
         <title>控制算法面试</title>
-        <link>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95/</link>
+        <link>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95/</link>
         <pubDate>Mon, 16 Dec 2024 21:15:00 +0800</pubDate>
         
-        <guid>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95/</guid>
+        <guid>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95%E9%9D%A2%E8%AF%95/</guid>
         <description>&lt;h1 id=&#34;控制算法面试&#34;&gt;控制算法面试
 &lt;/h1&gt;&lt;h2 id=&#34;1pid算法原理如何调pid&#34;&gt;1.PID算法原理，如何调PID
 &lt;/h2&gt;&lt;h3 id=&#34;算法原理&#34;&gt;算法原理
@@ -5523,10 +5523,10 @@ SPI接口一般使用四条信号线通信：&lt;/p&gt;
         </item>
         <item>
         <title>代码随想录 算法</title>
-        <link>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/</link>
+        <link>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/</link>
         <pubDate>Mon, 16 Dec 2024 21:14:00 +0800</pubDate>
         
-        <guid>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/</guid>
+        <guid>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/</guid>
         <description>&lt;h1 id=&#34;算法题&#34;&gt;算法题
 &lt;/h1&gt;&lt;h1 id=&#34;代码随想录&#34;&gt;代码随想录
 &lt;/h1&gt;&lt;h2 id=&#34;一数组&#34;&gt;一、数组
@@ -9268,7 +9268,7 @@ SPI接口一般使用四条信号线通信：&lt;/p&gt;
 &lt;h3 id=&#34;7不同的二叉搜索树&#34;&gt;7.不同的二叉搜索树
 &lt;/h3&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://leetcode.cn/problems/unique-binary-search-trees/description/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://leetcode.cn/problems/unique-binary-search-trees/description/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://pikapika-zrf.github.io/imgs/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/20210107093226241.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/imgs/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/20210107093226241.png&#34;
 	
 	
 	
@@ -9298,7 +9298,7 @@ SPI接口一般使用四条信号线通信：&lt;/p&gt;
 &lt;li&gt;空间复杂度：$O(n)$&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h3 id=&#34;8-01背包理论基础&#34;&gt;8. 01背包理论基础
-&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;https://pikapika-zrf.github.io/imgs/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/202309181640514.png&#34;
+&lt;/h3&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/imgs/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/202309181640514.png&#34;
 	
 	
 	
@@ -9900,7 +9900,7 @@ SPI接口一般使用四条信号线通信：&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;状态四：今天为冷冻期状态，但冷冻期状态不可持续，只有一天！&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://pikapika-zrf.github.io/imgs/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/202309181940098.png&#34;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/imgs/%E7%AE%97%E6%B3%95%E9%9A%8F%E6%83%B3%E5%BD%95/202309181940098.png&#34;
 	
 	
 	
@@ -10835,10 +10835,10 @@ SPI接口一般使用四条信号线通信：&lt;/p&gt;
         </item>
         <item>
         <title>crazyswarm功能包使用</title>
-        <link>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/crazyswarm%E5%8A%9F%E8%83%BD%E5%8C%85%E4%BD%BF%E7%94%A8/</link>
+        <link>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/crazyswarm%E5%8A%9F%E8%83%BD%E5%8C%85%E4%BD%BF%E7%94%A8/</link>
         <pubDate>Mon, 16 Dec 2024 21:13:00 +0800</pubDate>
         
-        <guid>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/crazyswarm%E5%8A%9F%E8%83%BD%E5%8C%85%E4%BD%BF%E7%94%A8/</guid>
+        <guid>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/crazyswarm%E5%8A%9F%E8%83%BD%E5%8C%85%E4%BD%BF%E7%94%A8/</guid>
         <description>&lt;h1 id=&#34;crazyswarm功能包使用&#34;&gt;crazyswarm功能包使用
 &lt;/h1&gt;&lt;h2 id=&#34;一crazyflie--optitrack-ros编队控制实现&#34;&gt;一、Crazyflie + optitrack +ros编队控制实现
 &lt;/h2&gt;&lt;p&gt;参考论文https://link.springer.com/chapter/10.1007/978-3-319-54927-9_3&lt;/p&gt;
@@ -10998,10 +10998,10 @@ motion_capture_host_name: &amp;#34;192.168.2.17&amp;#34; # hostname or IP addres
         </item>
         <item>
         <title>ROS机器人开发</title>
-        <link>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/ros%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BC%80%E5%8F%91/</link>
+        <link>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/ros%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BC%80%E5%8F%91/</link>
         <pubDate>Mon, 16 Dec 2024 21:12:00 +0800</pubDate>
         
-        <guid>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/ros%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BC%80%E5%8F%91/</guid>
+        <guid>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/ros%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BC%80%E5%8F%91/</guid>
         <description>&lt;h1 id=&#34;第一章-ros基础&#34;&gt;第一章 ROS基础
 &lt;/h1&gt;&lt;h2 id=&#34;1ros安装&#34;&gt;1.ROS安装
 &lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;http://wiki.ros.org/kinetic/Installtion/Source&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -13595,16 +13595,26 @@ box
         </item>
         <item>
         <title>并发与多线程 学习笔记</title>
-        <link>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/</link>
+        <link>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/</link>
         <pubDate>Mon, 16 Dec 2024 21:11:00 +0800</pubDate>
         
-        <guid>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/</guid>
+        <guid>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E5%B9%B6%E5%8F%91%E4%B8%8E%E5%A4%9A%E7%BA%BF%E7%A8%8B/</guid>
         <description>&lt;h1 id=&#34;并发与多线程&#34;&gt;并发与多线程
 &lt;/h1&gt;&lt;p&gt;笔记参考: &lt;a class=&#34;link&#34; href=&#34;https://blog.csdn.net/qq_38231713/article/details/106091597&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://blog.csdn.net/qq_38231713/article/details/106091597&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;代码参考: &lt;a class=&#34;link&#34; href=&#34;https://github.com/yunxijun/cpp11_multithread/blob/master/main.cpp&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://github.com/yunxijun/cpp11_multithread/blob/master/main.cpp&lt;/a&gt;&lt;/p&gt;
 &lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/multi_thread1.jpg&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
 &lt;p&gt;B站https://www.bilibili.com/video/BV1Yb411L7ak?p=1&amp;amp;vd_source=f8705e057957dafd33c98d31eb54e3cd&lt;/p&gt;
 &lt;h2 id=&#34;第一节-并发基本概念及实现进程线程基本概念&#34;&gt;第一节 并发基本概念及实现，进程、线程基本概念
 &lt;/h2&gt;&lt;h3 id=&#34;1并发进程线程的基本概念和综述&#34;&gt;（1）并发、进程、线程的基本概念和综述
@@ -15236,10 +15246,10 @@ windows：可以写个类自动释放临界区：&lt;/p&gt;
         </item>
         <item>
         <title>c&#43;&#43;基础</title>
-        <link>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/c&#43;&#43;%E5%9F%BA%E7%A1%80/</link>
+        <link>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/c&#43;&#43;%E5%9F%BA%E7%A1%80/</link>
         <pubDate>Mon, 16 Dec 2024 21:10:00 +0800</pubDate>
         
-        <guid>https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/c&#43;&#43;%E5%9F%BA%E7%A1%80/</guid>
+        <guid>http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/c&#43;&#43;%E5%9F%BA%E7%A1%80/</guid>
         <description>&lt;p&gt;&lt;strong&gt;C++编程基础&lt;/strong&gt;&lt;/p&gt;
 &lt;h1 id=&#34;1类和io库&#34;&gt;1.类和IO库
 &lt;/h1&gt;&lt;h2 id=&#34;4类和对象&#34;&gt;4.类和对象

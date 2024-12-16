@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh" dir="ltr">
-    <head><meta charset='utf-8'>
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="C++编程基础\n1.类和IO库 4.类和对象 4.1封装 属性和行为作为整体 from: 黑马程序员B站\n#include&lt;iostream&gt; using namespace std; #include&lt;string&gt; const double PI = 3.14; class Circle { public: int m_r; double calculateZC() { return 2 * PI * m_r; } }; int main() { Circle cl; cl.m_r = 10; cout &lt;&lt; &#34;圆的周长=&#34; &lt;&lt; cl.calculateZC() &lt;&lt; endl; system(&#34;pause&#34;); return 0; } 案例-设计学生类 #include&lt;iostream&gt; using namespace std; #include&lt;string&gt; class Student { public: //类中的属性和行为\t我们统一称为\t成员 //属性\t成员属性\t成员变量 //行为\t成员函数\t成员方法 //属性 string m_Name; int m_Id; //行为 //给姓名赋值 void setName(string name) { m_Name = name; } void showStudent() { cout &lt;&lt; &#34;姓名：&#34; &lt;&lt; m_Name &lt;&lt; &#34; 学号：&#34; &lt;&lt; m_Id &lt;&lt; endl; } }; int main() { Student s1; Student s2; s1.m_Name = &#34;张三&#34;; s1.m_Id = 1; s1.showStudent(); s2.setName(&#34;李四&#34;); s2.m_Id = 2; s2.showStudent(); system(&#34;pause&#34;); return 0; } 访问权限 \u200b\t类在设计时,可以把属性和行为放在不同的权限下,加以控制\n">
 <title>c&#43;&#43;基础</title>
 
-<link rel='canonical' href='https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/c&#43;&#43;%E5%9F%BA%E7%A1%80/'>
+<link rel='canonical' href='http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/c&#43;&#43;%E5%9F%BA%E7%A1%80/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="c++基础">
 <meta property='og:description' content="C++编程基础\n1.类和IO库 4.类和对象 4.1封装 属性和行为作为整体 from: 黑马程序员B站\n#include&lt;iostream&gt; using namespace std; #include&lt;string&gt; const double PI = 3.14; class Circle { public: int m_r; double calculateZC() { return 2 * PI * m_r; } }; int main() { Circle cl; cl.m_r = 10; cout &lt;&lt; &#34;圆的周长=&#34; &lt;&lt; cl.calculateZC() &lt;&lt; endl; system(&#34;pause&#34;); return 0; } 案例-设计学生类 #include&lt;iostream&gt; using namespace std; #include&lt;string&gt; class Student { public: //类中的属性和行为\t我们统一称为\t成员 //属性\t成员属性\t成员变量 //行为\t成员函数\t成员方法 //属性 string m_Name; int m_Id; //行为 //给姓名赋值 void setName(string name) { m_Name = name; } void showStudent() { cout &lt;&lt; &#34;姓名：&#34; &lt;&lt; m_Name &lt;&lt; &#34; 学号：&#34; &lt;&lt; m_Id &lt;&lt; endl; } }; int main() { Student s1; Student s2; s1.m_Name = &#34;张三&#34;; s1.m_Id = 1; s1.showStudent(); s2.setName(&#34;李四&#34;); s2.m_Id = 2; s2.showStudent(); system(&#34;pause&#34;); return 0; } 访问权限 \u200b\t类在设计时,可以把属性和行为放在不同的权限下,加以控制\n">
-<meta property='og:url' content='https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/c&#43;&#43;%E5%9F%BA%E7%A1%80/'>
+<meta property='og:url' content='http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/c&#43;&#43;%E5%9F%BA%E7%A1%80/'>
 <meta property='og:site_name' content='raff Site'>
 <meta property='og:type' content='article'><meta property='article:section' content='Reading-Notes' /><meta property='article:published_time' content='2024-12-16T21:10:00&#43;08:00'/><meta property='article:modified_time' content='2024-12-16T21:10:00&#43;08:00'/>
 <meta name="twitter:title" content="c++基础">
@@ -8656,7 +8656,7 @@ resize(num，elem);	//重新指定容器的长度为num，若容器变长，则�
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.3d77866ec2ca96ed309ef0db701e98ee686f9a7761045fe1a6fe807e12eacc91.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
