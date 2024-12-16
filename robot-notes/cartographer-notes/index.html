@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="date = &lsquo;2024-11-30T21:50:00+08:00&rsquo; draft = true title = &lsquo;carographer notes&rsquo;\n+++\n0 前言 github：https://github.com/cartographer-project/cartographer 官方教程：https://google-cartographer.readthedocs.io/en/stable/index.html cartographer_ros github: https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file 官方教程：https://google-cartographer-ros.readthedocs.io/en/stable/ ros2 github：https://github.com/ros2/cartographer https://github.com/ros2/cartographer_ros https://zhuanlan.zhihu.com/p/526379828 安装\n1 案例 rosdepc install --from-paths src --ignore-src --rosdistro $ROS_DISTRO -r -y colcon build --parallel-workers 4 --cmake-clean-cache wget -P ~/Downloads https://storage.googleapis.com/cartographer-public-data/bags/backpack_2d/cartographer_paper_deutsches_museum.bag ros2 launch cartographer_ros demo_backpack_2d.launch.py bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 生成pbstream地图 roslaunch cartographer_ros offline_backpack_2d.launch bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 运行纯定位 roslaunch cartographer_ros demo_backpack_2d_localization.launch load_state_filename:=/source/MovingRobot_Sim/download/cartographer_paper_deutsches_museum.bag.pbstream bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag ">
+<title></title>
+
+<link rel='canonical' href='https://pikapika-zrf.github.io/robot-notes/cartographer-notes/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="">
+<meta property='og:description' content="date = &lsquo;2024-11-30T21:50:00+08:00&rsquo; draft = true title = &lsquo;carographer notes&rsquo;\n+++\n0 前言 github：https://github.com/cartographer-project/cartographer 官方教程：https://google-cartographer.readthedocs.io/en/stable/index.html cartographer_ros github: https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file 官方教程：https://google-cartographer-ros.readthedocs.io/en/stable/ ros2 github：https://github.com/ros2/cartographer https://github.com/ros2/cartographer_ros https://zhuanlan.zhihu.com/p/526379828 安装\n1 案例 rosdepc install --from-paths src --ignore-src --rosdistro $ROS_DISTRO -r -y colcon build --parallel-workers 4 --cmake-clean-cache wget -P ~/Downloads https://storage.googleapis.com/cartographer-public-data/bags/backpack_2d/cartographer_paper_deutsches_museum.bag ros2 launch cartographer_ros demo_backpack_2d.launch.py bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 生成pbstream地图 roslaunch cartographer_ros offline_backpack_2d.launch bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 运行纯定位 roslaunch cartographer_ros demo_backpack_2d_localization.launch load_state_filename:=/source/MovingRobot_Sim/download/cartographer_paper_deutsches_museum.bag.pbstream bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag ">
+<meta property='og:url' content='https://pikapika-zrf.github.io/robot-notes/cartographer-notes/'>
+<meta property='og:site_name' content='raff Site'>
+<meta property='og:type' content='article'><meta property='article:section' content='Robot-Notes' />
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content="date = &lsquo;2024-11-30T21:50:00+08:00&rsquo; draft = true title = &lsquo;carographer notes&rsquo;\n+++\n0 前言 github：https://github.com/cartographer-project/cartographer 官方教程：https://google-cartographer.readthedocs.io/en/stable/index.html cartographer_ros github: https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file 官方教程：https://google-cartographer-ros.readthedocs.io/en/stable/ ros2 github：https://github.com/ros2/cartographer https://github.com/ros2/cartographer_ros https://zhuanlan.zhihu.com/p/526379828 安装\n1 案例 rosdepc install --from-paths src --ignore-src --rosdistro $ROS_DISTRO -r -y colcon build --parallel-workers 4 --cmake-clean-cache wget -P ~/Downloads https://storage.googleapis.com/cartographer-public-data/bags/backpack_2d/cartographer_paper_deutsches_museum.bag ros2 launch cartographer_ros demo_backpack_2d.launch.py bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 生成pbstream地图 roslaunch cartographer_ros offline_backpack_2d.launch bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag # 运行纯定位 roslaunch cartographer_ros demo_backpack_2d_localization.launch load_state_filename:=/source/MovingRobot_Sim/download/cartographer_paper_deutsches_museum.bag.pbstream bag_filename:=/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag ">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5202140483351697843.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">raff Site</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/tech-blogs/' >
+                
+                
+                
+                <span>技术博客</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/reading-notes/' >
+                
+                
+                
+                <span>读书笔记</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/robot-notes/' >
+                
+                
+                
+                <span>机器人笔记</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/robot-notes/cartographer-notes/"></a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>date = &lsquo;2024-11-30T21:50:00+08:00&rsquo;
+draft = true
+title = &lsquo;carographer notes&rsquo;</p>
+<p>+++</p>
+<h2 id="0-前言">0 前言
+</h2><ol>
+<li>github：https://github.com/cartographer-project/cartographer</li>
+<li>官方教程：https://google-cartographer.readthedocs.io/en/stable/index.html</li>
+<li>cartographer_ros github: <a class="link" href="https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file"  target="_blank" rel="noopener"
+    >https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file</a></li>
+<li>官方教程：https://google-cartographer-ros.readthedocs.io/en/stable/</li>
+<li>ros2 github：https://github.com/ros2/cartographer
+<a class="link" href="https://github.com/ros2/cartographer_ros"  target="_blank" rel="noopener"
+    >https://github.com/ros2/cartographer_ros</a></li>
+<li><a class="link" href="https://zhuanlan.zhihu.com/p/526379828"  target="_blank" rel="noopener"
+    >https://zhuanlan.zhihu.com/p/526379828</a></li>
+</ol>
+<p>安装</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"></code></pre></div><h2 id="1-案例">1 案例
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rosdepc install --from-paths src --ignore-src --rosdistro $ROS_DISTRO -r -y
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>colcon build --parallel-workers <span style="color:#ae81ff">4</span> --cmake-clean-cache
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>wget -P ~/Downloads https://storage.googleapis.com/cartographer-public-data/bags/backpack_2d/cartographer_paper_deutsches_museum.bag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>ros2 launch cartographer_ros demo_backpack_2d.launch.py bag_filename:<span style="color:#f92672">=</span>/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 生成pbstream地图</span>
+</span></span><span style="display:flex;"><span>roslaunch cartographer_ros offline_backpack_2d.launch bag_filename:<span style="color:#f92672">=</span>/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 运行纯定位</span>
+</span></span><span style="display:flex;"><span>roslaunch cartographer_ros demo_backpack_2d_localization.launch  load_state_filename:<span style="color:#f92672">=</span>/source/MovingRobot_Sim/download/cartographer_paper_deutsches_museum.bag.pbstream   bag_filename:<span style="color:#f92672">=</span>/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="pikapika-zrf/pikapika-zrf.github.io"
+        issue-term="pathname"
+        
+        label="comment"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 raff
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

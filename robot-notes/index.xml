@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Robot-Notes on raff Site</title>
+        <link>https://pikapika-zrf.github.io/robot-notes/</link>
+        <description>Recent content in Robot-Notes on raff Site</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh</language>
+        <copyright>raff</copyright><atom:link href="https://pikapika-zrf.github.io/robot-notes/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title></title>
+        <link>https://pikapika-zrf.github.io/robot-notes/cartographer-notes/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://pikapika-zrf.github.io/robot-notes/cartographer-notes/</guid>
+        <description>&lt;p&gt;date = &amp;lsquo;2024-11-30T21:50:00+08:00&amp;rsquo;
+draft = true
+title = &amp;lsquo;carographer notes&amp;rsquo;&lt;/p&gt;
+&lt;p&gt;+++&lt;/p&gt;
+&lt;h2 id=&#34;0-前言&#34;&gt;0 前言
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;github：https://github.com/cartographer-project/cartographer&lt;/li&gt;
+&lt;li&gt;官方教程：https://google-cartographer.readthedocs.io/en/stable/index.html&lt;/li&gt;
+&lt;li&gt;cartographer_ros github: &lt;a class=&#34;link&#34; href=&#34;https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/cartographer-project/cartographer_ros?tab=readme-ov-file&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;官方教程：https://google-cartographer-ros.readthedocs.io/en/stable/&lt;/li&gt;
+&lt;li&gt;ros2 github：https://github.com/ros2/cartographer
+&lt;a class=&#34;link&#34; href=&#34;https://github.com/ros2/cartographer_ros&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/ros2/cartographer_ros&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://zhuanlan.zhihu.com/p/526379828&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://zhuanlan.zhihu.com/p/526379828&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;安装&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;1-案例&#34;&gt;1 案例
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;rosdepc install --from-paths src --ignore-src --rosdistro $ROS_DISTRO -r -y
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;colcon build --parallel-workers &lt;span style=&#34;color:#ae81ff&#34;&gt;4&lt;/span&gt; --cmake-clean-cache
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;wget -P ~/Downloads https://storage.googleapis.com/cartographer-public-data/bags/backpack_2d/cartographer_paper_deutsches_museum.bag
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;ros2 launch cartographer_ros demo_backpack_2d.launch.py bag_filename:&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 生成pbstream地图&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;roslaunch cartographer_ros offline_backpack_2d.launch bag_filename:&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;# 运行纯定位&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;roslaunch cartographer_ros demo_backpack_2d_localization.launch  load_state_filename:&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/source/MovingRobot_Sim/download/cartographer_paper_deutsches_museum.bag.pbstream   bag_filename:&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;/source/MovingRobot_Sim/downloads/cartographer_paper_deutsches_museum.bag
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

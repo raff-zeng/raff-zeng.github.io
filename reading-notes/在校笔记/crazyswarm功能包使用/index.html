@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="crazyswarm功能包使用 一、Crazyflie + optitrack +ros编队控制实现 参考论文https://link.springer.com/chapter/10.1007/978-3-319-54927-9_3\nhttps://ieeexplore.ieee.org/abstract/document/7989376\n先观看视频https://www.youtube.com/watch?v=9KlfFpv6NIQ\n\u200b\tCrazyflie有一个9轴惯性测量单元（IMU），由陀螺仪、加速度计和磁力计组成。此外，可以使用压力传感器来估计高度。大部分处理在主微控制器（STM32）上完成。它运行FreeRTOS作为其操作系统，状态估计和姿态控制以250Hz执行。第二微控制器（nRF51）用于无线通信并用作电源管理器。这两个微控制器可以通过syslink交换数据，这是一种使用UART作为物理接口的协议。扩展端口允许添加附加硬件。\nCrazyflie配置\n以下均参考https://crazyswarm.readthedocs.io/en/latest/installation.html\n1.crazyradio权限设置 https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/installation/usb_permissions/\n2.下载crazyflie-lib-python和crazyflie-client-python包 https://github.com/bitcraze/crazyflie-lib-python.git\nhttps://github.com/bitcraze/crazyflie-clients-python.git\n#分别在这两个目录下 pip3 install -e . #启动客户端 python3 -m cfclient.gui #说明 #crazyflie命名按顺序修改最后两位，并在crazyflie上做好标记防止忘记地址 #uri1:=radio://0/100/2M/E7E7E7E701 #uri2:=radio://0/100/2M/E7E7E7E702 3. crazyswarm配置 1.安装\nexport CSW_PYTHON=python3 #安装依赖 sudo apt install -y ros-noetic-tf ros-noetic-tf-conversions ros-noetic-joy sudo apt install -y libpcl-dev libusb-1.0-0-dev sudo apt install -y swig lib${CSW_PYTHON}-dev ${CSW_PYTHON}-pip ${CSW_PYTHON} -m pip install pytest numpy PyYAML scipy ${CSW_PYTHON} -m pip install vispy #截图工具 sudo apt install -y ffmpeg ${CSW_PYTHON} -m pip install ffmpeg-python git clone https://github.com/USC-ACTLab/crazyswarm.git #编译 cd crazyswarm ./build.sh #测试 cd ros_ws/src/crazyswarm/scripts source ~/crazyswarm/ros_ws/devel/setup.bash $CSW_PYTHON -m pytest 2.参数设置\n">
+<title>crazyswarm功能包使用</title>
+
+<link rel='canonical' href='https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/crazyswarm%E5%8A%9F%E8%83%BD%E5%8C%85%E4%BD%BF%E7%94%A8/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="crazyswarm功能包使用">
+<meta property='og:description' content="crazyswarm功能包使用 一、Crazyflie + optitrack +ros编队控制实现 参考论文https://link.springer.com/chapter/10.1007/978-3-319-54927-9_3\nhttps://ieeexplore.ieee.org/abstract/document/7989376\n先观看视频https://www.youtube.com/watch?v=9KlfFpv6NIQ\n\u200b\tCrazyflie有一个9轴惯性测量单元（IMU），由陀螺仪、加速度计和磁力计组成。此外，可以使用压力传感器来估计高度。大部分处理在主微控制器（STM32）上完成。它运行FreeRTOS作为其操作系统，状态估计和姿态控制以250Hz执行。第二微控制器（nRF51）用于无线通信并用作电源管理器。这两个微控制器可以通过syslink交换数据，这是一种使用UART作为物理接口的协议。扩展端口允许添加附加硬件。\nCrazyflie配置\n以下均参考https://crazyswarm.readthedocs.io/en/latest/installation.html\n1.crazyradio权限设置 https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/installation/usb_permissions/\n2.下载crazyflie-lib-python和crazyflie-client-python包 https://github.com/bitcraze/crazyflie-lib-python.git\nhttps://github.com/bitcraze/crazyflie-clients-python.git\n#分别在这两个目录下 pip3 install -e . #启动客户端 python3 -m cfclient.gui #说明 #crazyflie命名按顺序修改最后两位，并在crazyflie上做好标记防止忘记地址 #uri1:=radio://0/100/2M/E7E7E7E701 #uri2:=radio://0/100/2M/E7E7E7E702 3. crazyswarm配置 1.安装\nexport CSW_PYTHON=python3 #安装依赖 sudo apt install -y ros-noetic-tf ros-noetic-tf-conversions ros-noetic-joy sudo apt install -y libpcl-dev libusb-1.0-0-dev sudo apt install -y swig lib${CSW_PYTHON}-dev ${CSW_PYTHON}-pip ${CSW_PYTHON} -m pip install pytest numpy PyYAML scipy ${CSW_PYTHON} -m pip install vispy #截图工具 sudo apt install -y ffmpeg ${CSW_PYTHON} -m pip install ffmpeg-python git clone https://github.com/USC-ACTLab/crazyswarm.git #编译 cd crazyswarm ./build.sh #测试 cd ros_ws/src/crazyswarm/scripts source ~/crazyswarm/ros_ws/devel/setup.bash $CSW_PYTHON -m pytest 2.参数设置\n">
+<meta property='og:url' content='https://pikapika-zrf.github.io/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/crazyswarm%E5%8A%9F%E8%83%BD%E5%8C%85%E4%BD%BF%E7%94%A8/'>
+<meta property='og:site_name' content='raff Site'>
+<meta property='og:type' content='article'><meta property='article:section' content='Reading-Notes' /><meta property='article:published_time' content='2024-12-16T21:13:00&#43;08:00'/><meta property='article:modified_time' content='2024-12-16T21:13:00&#43;08:00'/>
+<meta name="twitter:title" content="crazyswarm功能包使用">
+<meta name="twitter:description" content="crazyswarm功能包使用 一、Crazyflie + optitrack +ros编队控制实现 参考论文https://link.springer.com/chapter/10.1007/978-3-319-54927-9_3\nhttps://ieeexplore.ieee.org/abstract/document/7989376\n先观看视频https://www.youtube.com/watch?v=9KlfFpv6NIQ\n\u200b\tCrazyflie有一个9轴惯性测量单元（IMU），由陀螺仪、加速度计和磁力计组成。此外，可以使用压力传感器来估计高度。大部分处理在主微控制器（STM32）上完成。它运行FreeRTOS作为其操作系统，状态估计和姿态控制以250Hz执行。第二微控制器（nRF51）用于无线通信并用作电源管理器。这两个微控制器可以通过syslink交换数据，这是一种使用UART作为物理接口的协议。扩展端口允许添加附加硬件。\nCrazyflie配置\n以下均参考https://crazyswarm.readthedocs.io/en/latest/installation.html\n1.crazyradio权限设置 https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/installation/usb_permissions/\n2.下载crazyflie-lib-python和crazyflie-client-python包 https://github.com/bitcraze/crazyflie-lib-python.git\nhttps://github.com/bitcraze/crazyflie-clients-python.git\n#分别在这两个目录下 pip3 install -e . #启动客户端 python3 -m cfclient.gui #说明 #crazyflie命名按顺序修改最后两位，并在crazyflie上做好标记防止忘记地址 #uri1:=radio://0/100/2M/E7E7E7E701 #uri2:=radio://0/100/2M/E7E7E7E702 3. crazyswarm配置 1.安装\nexport CSW_PYTHON=python3 #安装依赖 sudo apt install -y ros-noetic-tf ros-noetic-tf-conversions ros-noetic-joy sudo apt install -y libpcl-dev libusb-1.0-0-dev sudo apt install -y swig lib${CSW_PYTHON}-dev ${CSW_PYTHON}-pip ${CSW_PYTHON} -m pip install pytest numpy PyYAML scipy ${CSW_PYTHON} -m pip install vispy #截图工具 sudo apt install -y ffmpeg ${CSW_PYTHON} -m pip install ffmpeg-python git clone https://github.com/USC-ACTLab/crazyswarm.git #编译 cd crazyswarm ./build.sh #测试 cd ros_ws/src/crazyswarm/scripts source ~/crazyswarm/ros_ws/devel/setup.bash $CSW_PYTHON -m pytest 2.参数设置\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5202140483351697843.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">raff Site</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/tech-blogs/' >
+                
+                
+                
+                <span>技术博客</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/reading-notes/' >
+                
+                
+                
+                <span>读书笔记</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/robot-notes/' >
+                
+                
+                
+                <span>机器人笔记</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/crazyswarm%E5%8A%9F%E8%83%BD%E5%8C%85%E4%BD%BF%E7%94%A8/">crazyswarm功能包使用</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 16, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="crazyswarm功能包使用">crazyswarm功能包使用
+</h1><h2 id="一crazyflie--optitrack-ros编队控制实现">一、Crazyflie + optitrack +ros编队控制实现
+</h2><p>参考论文https://link.springer.com/chapter/10.1007/978-3-319-54927-9_3</p>
+<p><a class="link" href="https://ieeexplore.ieee.org/abstract/document/7989376"  target="_blank" rel="noopener"
+    >https://ieeexplore.ieee.org/abstract/document/7989376</a></p>
+<p>先观看视频https://www.youtube.com/watch?v=9KlfFpv6NIQ</p>
+<p>​	Crazyflie有一个9轴惯性测量单元（IMU），由陀螺仪、加速度计和磁力计组成。此外，可以使用压力传感器来估计高度。大部分处理在主微控制器（STM32）上完成。它运行FreeRTOS作为其操作系统，状态估计和姿态控制以250Hz执行。第二微控制器（nRF51）用于无线通信并用作电源管理器。这两个微控制器可以通过syslink交换数据，这是一种使用UART作为物理接口的协议。扩展端口允许添加附加硬件。</p>
+<p><strong>Crazyflie配置</strong></p>
+<p>以下均参考https://crazyswarm.readthedocs.io/en/latest/installation.html</p>
+<h3 id="1crazyradio权限设置">1.crazyradio权限设置
+</h3><p><a class="link" href="https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/installation/usb_permissions/"  target="_blank" rel="noopener"
+    >https://www.bitcraze.io/documentation/repository/crazyflie-lib-python/master/installation/usb_permissions/</a></p>
+<h3 id="2下载crazyflie-lib-python和crazyflie-client-python包">2.下载crazyflie-lib-python和crazyflie-client-python包
+</h3><p><a class="link" href="https://github.com/bitcraze/crazyflie-lib-python.git"  target="_blank" rel="noopener"
+    >https://github.com/bitcraze/crazyflie-lib-python.git</a></p>
+<p><a class="link" href="https://github.com/bitcraze/crazyflie-clients-python.git"  target="_blank" rel="noopener"
+    >https://github.com/bitcraze/crazyflie-clients-python.git</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span> <span style="color:#75715e">#分别在这两个目录下  </span>
+</span></span><span style="display:flex;"><span>pip3 install -e .   
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#启动客户端   </span>
+</span></span><span style="display:flex;"><span>python3 -m cfclient.gui
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#说明   </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#crazyflie命名按顺序修改最后两位，并在crazyflie上做好标记防止忘记地址   #uri1:=radio://0/100/2M/E7E7E7E701   </span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#uri2:=radio://0/100/2M/E7E7E7E702  </span>
+</span></span></code></pre></div><h3 id="3-crazyswarm配置">3. crazyswarm配置
+</h3><p><strong>1.安装</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>export CSW_PYTHON<span style="color:#f92672">=</span>python3   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#安装依赖   </span>
+</span></span><span style="display:flex;"><span>sudo apt install -y ros-noetic-tf ros-noetic-tf-conversions ros-noetic-joy   
+</span></span><span style="display:flex;"><span>sudo apt install -y libpcl-dev libusb-1.0-0-dev   
+</span></span><span style="display:flex;"><span>sudo apt install -y swig lib<span style="color:#e6db74">${</span>CSW_PYTHON<span style="color:#e6db74">}</span>-dev <span style="color:#e6db74">${</span>CSW_PYTHON<span style="color:#e6db74">}</span>-pip   
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>CSW_PYTHON<span style="color:#e6db74">}</span> -m pip install pytest numpy PyYAML scipy   
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>CSW_PYTHON<span style="color:#e6db74">}</span> -m pip install vispy   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#截图工具   </span>
+</span></span><span style="display:flex;"><span>sudo apt install -y ffmpeg   
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">${</span>CSW_PYTHON<span style="color:#e6db74">}</span> -m pip install ffmpeg-python      
+</span></span><span style="display:flex;"><span>git clone https://github.com/USC-ACTLab/crazyswarm.git      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#编译   </span>
+</span></span><span style="display:flex;"><span>cd crazyswarm   
+</span></span><span style="display:flex;"><span>./build.sh      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#测试</span>
+</span></span><span style="display:flex;"><span>cd ros_ws/src/crazyswarm/scripts   
+</span></span><span style="display:flex;"><span>source ~/crazyswarm/ros_ws/devel/setup.bash   
+</span></span><span style="display:flex;"><span>$CSW_PYTHON -m pytest  
+</span></span></code></pre></div><p><strong>2.参数设置</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#crazyradio固件更新   </span>
+</span></span><span style="display:flex;"><span>cd ~/crazyflie_docs   
+</span></span><span style="display:flex;"><span>git clone https://github.com/bitcraze/crazyradio-firmware.git   
+</span></span><span style="display:flex;"><span>sudo apt-get install sdcc binutils      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#编译   </span>
+</span></span><span style="display:flex;"><span>cd ~/crazyflie_docs/crazyradio-firmware/firmware   
+</span></span><span style="display:flex;"><span>make CRPA<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>   
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#烧写前先安装python3-usb包  </span>
+</span></span><span style="display:flex;"><span>sudo apt install python3-usb      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#烧写   python3 ../usbtools/launchBootloader.py   </span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>sudo python3 ../usbtools/nrfbootload.py flash bin/cradio.bin         
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#重新插拔crazyradio，检查版本应为version  99.55   </span>
+</span></span><span style="display:flex;"><span>lsusb -d 1915:7777 -v | grep bcdDevice  
+</span></span></code></pre></div><p><em>ros_ws/src/crazyswarm/launch/hover_swarm.launch</em>参数设置</p>
+<pre tabindex="0"><code>motion_capture_type:  &#34;optitrack&#34;   
+motion_capture_host_name: &#34;192.168.2.17&#34; # hostname or IP address
+</code></pre><p><strong>Motive中设置</strong></p>
+<p>•     Up axis: Z</p>
+<p>•     若object_tracking_type:libobjecttracker,关闭all assets和打开labeled or unlabeled markers</p>
+<p><strong>crazyflies.yaml文件设置</strong>（<em>ros_ws/src/crazyswarm/launch/crazyflies.yaml</em>）</p>
+<p>crazyswarm服务器在启动时读取配置文件crazyflies.yaml</p>
+<p>•     唯一的标记排列，crazyflies.yaml条目的initialPosition字段将被忽略，但仍然应该设置它，因为解析器需要它。</p>
+<p>•     重复的标记排列，initialPosition必须正确。在运动捕捉设备的坐标系中，位置以米为单位指定。不要求CF精确地从这些位置开始，几厘米的变化是可以的。</p>
+<p><strong>crazyflieTypes.yaml设置</strong>（ros_ws/src/crazyswarm/launch/crazyflieTypes.yaml**）**</p>
+<p>•     唯一标记点排列中，markerConfiguration字段不需要，初始位置可以有</p>
+<p>•     复制标记点排列中，每个排列需要用markerConfiguration字段，默认的标记排列为0。1.在运动捕捉空间的原点放置一个具有所需排列的CF。Crazyflie的正面应指向运动捕捉坐标系的x方向。2.获得标记点的坐标，roslaunch crazyswarm mocap_helper.launch。3.修改crazyflieTypes.yaml</p>
+<p><strong>Chooser管理编队</strong></p>
+<p>使用配置文件allCrazyflies.yaml</p>
+<p><strong>3.简单悬停</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#启动crazyswarm_server   </span>
+</span></span><span style="display:flex;"><span>source ros_ws/devel/setup.bash   
+</span></span><span style="display:flex;"><span>roslaunch crazyswarm hover_swarm.launch      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#起飞悬停两秒后降落  </span>
+</span></span><span style="display:flex;"><span>python3 hello_world.py  
+</span></span></code></pre></div><p>crazyswarm相关命令</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>rosrun crazyflie_tools scan --address  0xE7E7E7E701   
+</span></span><span style="display:flex;"><span>rosrun crazyflie_tools battery --uri radio://0/100/2M/E7E7E7E701   
+</span></span><span style="display:flex;"><span>rosrun crazyflie_tools reboot radio://0/100/2M/E7E7E7E701 --mode sysoff   
+</span></span><span style="display:flex;"><span>rosrun crazyflie_tools reboot radio://0/100/2M/E7E7E7E701      
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>roslaunch crazyswarm mocap_helper.launch   
+</span></span><span style="display:flex;"><span>roslaunch crazyswarm hover_swarm.launch  
+</span></span></code></pre></div><p><strong>4.例子（~/crazyswarm/ros_ws/src/crazyswarm/scripts/）</strong></p>
+<p>使用python API写脚本实现位置速度轨迹等控制</p>
+<p>Python API接口参考https://crazyswarm.readthedocs.io/en/latest/api.html</p>
+<p>/home/uav2/crazyswarm/ros_ws/src/crazyswarm/scripts/hello_world.py</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#e6db74">&#34;&#34;&#34;Takeoff-hover-land for one CF. Useful to validate hardware 
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">config.&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pycrazyswarm <span style="color:#f92672">import</span> Crazyswarm
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>TAKEOFF_DURATION <span style="color:#f92672">=</span> <span style="color:#ae81ff">2.5</span>
+</span></span><span style="display:flex;"><span>HOVER_DURATION <span style="color:#f92672">=</span> <span style="color:#ae81ff">5.0</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">main</span>():
+</span></span><span style="display:flex;"><span>    swarm <span style="color:#f92672">=</span> Crazyswarm()
+</span></span><span style="display:flex;"><span>    timeHelper <span style="color:#f92672">=</span> swarm<span style="color:#f92672">.</span>timeHelper
+</span></span><span style="display:flex;"><span>    cf <span style="color:#f92672">=</span> swarm<span style="color:#f92672">.</span>allcfs<span style="color:#f92672">.</span>crazyflies[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    cf<span style="color:#f92672">.</span>takeoff(targetHeight<span style="color:#f92672">=</span><span style="color:#ae81ff">1.0</span>, duration<span style="color:#f92672">=</span>TAKEOFF_DURATION)
+</span></span><span style="display:flex;"><span>    timeHelper<span style="color:#f92672">.</span>sleep(TAKEOFF_DURATION <span style="color:#f92672">+</span> HOVER_DURATION)
+</span></span><span style="display:flex;"><span>    cf<span style="color:#f92672">.</span>land(targetHeight<span style="color:#f92672">=</span><span style="color:#ae81ff">0.04</span>, duration<span style="color:#f92672">=</span><span style="color:#ae81ff">2.5</span>)
+</span></span><span style="display:flex;"><span>    timeHelper<span style="color:#f92672">.</span>sleep(TAKEOFF_DURATION)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+</span></span><span style="display:flex;"><span>    main()
+</span></span></code></pre></div><p><strong>5.暂不需要，可选</strong></p>
+<ul>
+<li>创建ROS 工作空间</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir -p ~/crazyflie_ws/src
+</span></span><span style="display:flex;"><span>cd ~/crazyflie_ws/src
+</span></span><span style="display:flex;"><span>catkin_init_workspace
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#下载crazyswarm包，移入ROS工作空间</span>
+</span></span><span style="display:flex;"><span>mkdir -p ~/crazyflie_docs
+</span></span><span style="display:flex;"><span>cd ~/crazyflie_docs
+</span></span><span style="display:flex;"><span>git clone https://github.com/USC-ACTLab/crazyswarm.git
+</span></span><span style="display:flex;"><span>git submodule update --init --recursive
+</span></span><span style="display:flex;"><span>git submodule update --recursive
+</span></span><span style="display:flex;"><span>mv ~/crazyflie_docs/crazyswarm/ros_ws/src ~/crazyflie_ws/src
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#编译</span>
+</span></span><span style="display:flex;"><span>cd ~/crazyflie_ws
+</span></span><span style="display:flex;"><span>catkin_make
+</span></span><span style="display:flex;"><span>source ~/crazyflie_ws/devel/setup.bash
+</span></span></code></pre></div><ul>
+<li>动捕工作空间</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e">#代码clone</span>
+</span></span><span style="display:flex;"><span>mkdir -p ~/motioncap_ws/src
+</span></span><span style="display:flex;"><span>catkin_init_workspace
+</span></span><span style="display:flex;"><span>cd ~/motioncap_ws/src
+</span></span><span style="display:flex;"><span>git clone https://github.com/ros-drivers/vrpn_client_ros.git
+</span></span><span style="display:flex;"><span>cd ~/motioncap_ws
+</span></span><span style="display:flex;"><span>catkin_make
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">#运行</span>
+</span></span><span style="display:flex;"><span>roslaunch vrpn_client_ros/launch/sample.launch server:<span style="color:#f92672">=</span>192.168.2.17
+</span></span></code></pre></div>
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="pikapika-zrf/pikapika-zrf.github.io"
+        issue-term="pathname"
+        
+        label="comment"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 raff
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

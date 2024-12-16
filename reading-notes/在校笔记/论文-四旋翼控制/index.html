@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="四旋翼控制 PID 一、Bouabdallah,2004 被引：1851 Bouabdallah S, Noth A, Siegwart R. PID vs LQ control techniques applied to an indoor micro quadrotor[A]. 2004 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (IEEE Cat. No.04CH37566)[C]. 2004, 3: 2451–2456 vol.3.\n1.欧拉-拉格朗日模型 只有姿态部分 简化模型，忽视陀螺效应和交叉耦合:\n电机动力学\n2.PD控制 二、Bouabdallah,2004 被引：1179 Design and control of an indoor micro quadrotor\n1.牛顿欧拉模型 2.电机动力学 直流电机\n">
+<title>四旋翼控制</title>
+
+<link rel='canonical' href='http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87-%E5%9B%9B%E6%97%8B%E7%BF%BC%E6%8E%A7%E5%88%B6/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="四旋翼控制">
+<meta property='og:description' content="四旋翼控制 PID 一、Bouabdallah,2004 被引：1851 Bouabdallah S, Noth A, Siegwart R. PID vs LQ control techniques applied to an indoor micro quadrotor[A]. 2004 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (IEEE Cat. No.04CH37566)[C]. 2004, 3: 2451–2456 vol.3.\n1.欧拉-拉格朗日模型 只有姿态部分 简化模型，忽视陀螺效应和交叉耦合:\n电机动力学\n2.PD控制 二、Bouabdallah,2004 被引：1179 Design and control of an indoor micro quadrotor\n1.牛顿欧拉模型 2.电机动力学 直流电机\n">
+<meta property='og:url' content='http://localhost:1313/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87-%E5%9B%9B%E6%97%8B%E7%BF%BC%E6%8E%A7%E5%88%B6/'>
+<meta property='og:site_name' content='raff Site'>
+<meta property='og:type' content='article'><meta property='article:section' content='Reading-Notes' /><meta property='article:published_time' content='2024-12-16T21:16:00&#43;08:00'/><meta property='article:modified_time' content='2024-12-16T21:16:00&#43;08:00'/>
+<meta name="twitter:title" content="四旋翼控制">
+<meta name="twitter:description" content="四旋翼控制 PID 一、Bouabdallah,2004 被引：1851 Bouabdallah S, Noth A, Siegwart R. PID vs LQ control techniques applied to an indoor micro quadrotor[A]. 2004 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (IEEE Cat. No.04CH37566)[C]. 2004, 3: 2451–2456 vol.3.\n1.欧拉-拉格朗日模型 只有姿态部分 简化模型，忽视陀螺效应和交叉耦合:\n电机动力学\n2.PD控制 二、Bouabdallah,2004 被引：1179 Design and control of an indoor micro quadrotor\n1.牛顿欧拉模型 2.电机动力学 直流电机\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column compact"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5202140483351697843.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">raff Site</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/tech-blogs/' >
+                
+                
+                
+                <span>技术博客</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/reading-notes/' >
+                
+                
+                
+                <span>读书笔记</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/robot-notes/' >
+                
+                
+                
+                <span>机器人笔记</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/reading-notes/%E5%9C%A8%E6%A0%A1%E7%AC%94%E8%AE%B0/%E8%AE%BA%E6%96%87-%E5%9B%9B%E6%97%8B%E7%BF%BC%E6%8E%A7%E5%88%B6/">四旋翼控制</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 16, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="四旋翼控制">四旋翼控制
+</h1><h1 id="pid">PID
+</h1><h2 id="一bouabdallah2004--被引1851">一、Bouabdallah,2004  被引：1851
+</h2><p>Bouabdallah S, Noth A, Siegwart R. PID vs LQ control techniques applied to an indoor micro quadrotor[A]. 2004 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (IEEE Cat. No.04CH37566)[C]. 2004, 3: 2451–2456 vol.3.</p>
+<h3 id="1欧拉-拉格朗日模型-只有姿态部分">1.欧拉-拉格朗日模型 只有姿态部分
+</h3><!-- raw HTML omitted -->
+<p>简化模型，忽视陀螺效应和交叉耦合:</p>
+<!-- raw HTML omitted -->
+<p>电机动力学</p>
+<h3 id="2pd控制">2.PD控制
+</h3><!-- raw HTML omitted -->
+<h2 id="二bouabdallah2004-被引1179">二、Bouabdallah,2004 被引：1179
+</h2><p>Design and control of an indoor micro quadrotor</p>
+<h3 id="1牛顿欧拉模型">1.牛顿欧拉模型
+</h3><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h3 id="2电机动力学">2.电机动力学
+</h3><p>直流电机</p>
+<!-- raw HTML omitted -->
+<p>小电机低电感，近似为：</p>
+<!-- raw HTML omitted -->
+<p>引入螺旋桨和齿轮模型，上式写为：</p>
+<!-- raw HTML omitted -->
+<p>工作点$\dot{w}_0$线性化$\dot{w}_m = -Aw_m + Bu + C$</p>
+<!-- raw HTML omitted -->
+<h3 id="3控制器">3.控制器
+</h3><p>姿态角及其导数不依赖于位置状态，而位置向量依赖于角度。</p>
+<h4 id="姿态子系统">姿态子系统
+</h4><p>李雅普诺夫函数$V(X_\alpha)$：<img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303060930999.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306093023949"
+	
+	
+></p>
+<p>其导数</p>
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303060930748.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306093040701"
+	
+	
+></p>
+<p>控制器</p>
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303060931444.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306093104401"
+	
+	
+></p>
+<h4 id="高度控制">高度控制
+</h4><p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303061014138.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306101326336"
+	
+	
+>
+$$
+U_1 = \frac{mg}{cos(x_7)cos(x_9)}+\frac{m\hat{U}_1}{cos(x_7)cos(x_9)}
+$$</p>
+<p>$$
+\hat{U}_1 = k_4x_5 + k_5x_6
+$$</p>
+<h2 id="三bouabdallah2007-被引1312">三、Bouabdallah,2007 被引：1312
+</h2><p>Design and control of quadrotors with application to autonomous flying</p>
+<h3 id="第二章-欧拉拉格朗日模型与牛顿欧拉模型">第二章 欧拉拉格朗日模型与牛顿欧拉模型
+</h3><!-- raw HTML omitted -->
+<h3 id="第三章-系统设计">第三章 系统设计
+</h3><!-- raw HTML omitted -->
+<h3 id="第四章-控制器设计">第四章 控制器设计
+</h3><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h4 id="1pd控制">1.PD控制
+</h4><p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303061433466.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306143331419"
+	
+	
+></p>
+<h4 id="2lq">2.LQ
+</h4><p>线性系统损失函数和状态反馈：</p>
+<!-- raw HTML omitted -->
+<p>哈密顿函数时间导数最优的必要条件：</p>
+<!-- raw HTML omitted -->
+<p>P服从黎卡积方程<!-- raw HTML omitted --></p>
+<p>为了解决Riccati方程，我们首先构造哈密顿矩阵:</p>
+<!-- raw HTML omitted -->
+<p>线性化状态空间</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Pearson方法，假设黎卡积方程第二项为0，求解方程得到反馈增益矩阵</p>
+<p>永久解决黎卡积方程，Sage-Eisenberg方法</p>
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303061501872.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306150110822"
+	
+	
+></p>
+<h4 id="3反步法">3.反步法
+</h4><p>跟踪误差</p>
+<!-- raw HTML omitted -->
+<p>李雅普诺夫函数</p>
+<!-- raw HTML omitted -->
+<p>其导数</p>
+<!-- raw HTML omitted -->
+<p>通过引入虚拟控制输入$x_2$，使$z_1$镇定</p>
+<!-- raw HTML omitted -->
+<p>$\dot{V}$变为</p>
+<!-- raw HTML omitted -->
+<p>变量代换</p>
+<!-- raw HTML omitted -->
+<p>考虑增强李雅普诺夫函数</p>
+<!-- raw HTML omitted -->
+<p>其导数</p>
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303061513321.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306151348278"
+	
+	
+></p>
+<p>输入：</p>
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303061514849.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306151404802"
+	
+	
+></p>
+<p>同理得</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>控制器参数</p>
+<!-- raw HTML omitted -->
+<h4 id="4smc">4.SMC
+</h4><p>$s_2$取代$z_2$:</p>
+<!-- raw HTML omitted -->
+<p>李雅普诺夫函数</p>
+<!-- raw HTML omitted -->
+<p>设计控制律使$s\dot{s}&lt;0$</p>
+<!-- raw HTML omitted -->
+<p>其中$k_1,k_2&gt;0$，得输入：</p>
+<!-- raw HTML omitted -->
+<p>同理</p>
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303061639903.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230306163928852"
+	
+	
+></p>
+<p>控制器参数</p>
+<!-- raw HTML omitted -->
+<h4 id="5积分反步法">5.积分反步法
+</h4><p>6个不同的控制器</p>
+<h5 id="姿态控制">姿态控制
+</h5><p>姿态环运行频率76Hz，IMU的update rate</p>
+<p>跟踪误差	$e_1 = \phi_d - \phi$</p>
+<p>​		其导数	$\frac{de_1}{dt} = \dot{\phi}_d - w_x$</p>
+<p>角速度$w_s$不是控制输入而是有自己的动力学</p>
+<!-- raw HTML omitted -->
+<p>其中$c_1$和$\lambda_1$为正常数，滚转角跟踪误差的积分$\chi_1 = \int_0^te_1(\tau d\tau)$</p>
+<p>$w_x$有自己的误差$e_2$,动力学：</p>
+<!-- raw HTML omitted -->
+<p>角速度跟踪误差：</p>
+<!-- raw HTML omitted -->
+<p>滚转角跟踪误差动力学</p>
+<!-- raw HTML omitted -->
+<p>带入模型方程</p>
+<!-- raw HTML omitted -->
+<p>出现控制输入$U_2$</p>
+<!-- raw HTML omitted -->
+<p>由上面方程，得到</p>
+<!-- raw HTML omitted -->
+<p>期望动力学</p>
+<!-- raw HTML omitted -->
+<p>则选择控制输入</p>
+<!-- raw HTML omitted -->
+<p>其中 $c_2$为正常数。</p>
+<p>同理，得</p>
+<!-- raw HTML omitted -->
+<p>其中$(c_3,c_4,c_5,c_6,\lambda_2,\lambda_3)&gt;0$</p>
+<p>稳定性分析</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h5 id="高度控制-1">高度控制
+</h5><p>​		声呐以15Hz的速度获取高度信息</p>
+<p>跟踪误差</p>
+<!-- raw HTML omitted -->
+<p>速度跟踪误差</p>
+<!-- raw HTML omitted -->
+<p>控制律</p>
+<!-- raw HTML omitted -->
+<h5 id="位置控制">位置控制
+</h5><!-- raw HTML omitted -->
+<h2 id="四salih2010-被引334">四、Salih，2010 被引：334
+</h2><p>Salih A L, Moghavvemi M, Mohamed H A F, et al. Modelling and PID controller design for a quadrotor unmanned air vehicle[A]. 2010 IEEE International Conference on Automation, Quality and Testing, Robotics (AQTR)[C]. 2010, 1: 1–5.</p>
+<h3 id="1动态模型">1.动态模型
+</h3><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h3 id="2推导phi_d和psi_d">2.推导phi_d和psi_d
+</h3><!-- raw HTML omitted -->
+<h3 id="3控制器-1">3.控制器
+</h3><!-- raw HTML omitted -->
+<h2 id="五us-tiwary2020">五、U.S. Tiwary,2020
+</h2><p>Intelligent Human Computer Interaction: 11th International Conference, IHCI 2019, Allahabad, India, December 12–14, 2019, Proceedings[M]. U.S. Tiwary, S. Chaudhury. Cham: Springer International Publishing, 2020, 11886.</p>
+<h3 id="1动态模型-1">1.动态模型
+</h3><!-- raw HTML omitted -->
+<h2 id="文献">文献
+</h2><p>[1]Pounds P, Mahony R, Corke P. Modelling and control of a large quadrotor robot[J]. Control Engineering Practice, 2010, 18(7): 691–699.</p>
+<p>[1]Hoffmann G M, Huang H, Waslander S L, et al. Precision flight control for a multi-vehicle quadrotor helicopter testbed[J]. Control Engineering Practice, 2011, 19(9): 1023–1036.</p>
+<h1 id="smc">SMC
+</h1><h3 id="一kai-wang-2019-被引21">一、Kai Wang ，2019 被引：21
+</h3><p>Dual-loop integral sliding mode control for robust trajectory tracking of a quadrotor</p>
+<h4 id="1动力学模型">1.动力学模型
+</h4><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h4 id="2控制器设计">2.控制器设计
+</h4><!-- raw HTML omitted -->
+<h5 id="姿态控制器-双回路积分滑模">姿态控制器 双回路积分滑模
+</h5><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>扩张状态$h_1$</p>
+<!-- raw HTML omitted -->
+<p>LESO</p>
+<!-- raw HTML omitted -->
+<p>内环</p>
+<p>误差变量</p>
+<!-- raw HTML omitted -->
+<p>滑模面</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h3 id="二jing-jing-xiong-2016-被引256">二、Jing-Jing Xiong ，2016 被引：256
+</h3><p>Global fast dynamic <strong>terminal sliding mode control</strong> for a quadrotor UAV</p>
+<h4 id="1模型">1.模型：
+</h4><!-- raw HTML omitted -->
+<p>分为全驱和前驱子系统</p>
+<!-- raw HTML omitted -->
+<h4 id="2控制器">2.控制器
+</h4><p>全驱子系统</p>
+<p>滑模面</p>
+<!-- raw HTML omitted -->
+<p>global fast dynamic terminal滑模面</p>
+<!-- raw HTML omitted -->
+<p>参数$\alpha_i,\beta_i$为正数，$m&rsquo;_1,m&rsquo;_2,n&rsquo;_1,n&rsquo;_2$为正奇数且$m&rsquo;_1&lt;n&rsquo;_1,m&rsquo;_2&lt;n&rsquo;_2$</p>
+<p>令</p>
+<!-- raw HTML omitted -->
+<p>其中j=2,4</p>
+<h3 id="三zhiwei-hou-2020-被引95">三、Zhiwei Hou ，2020 被引：95
+</h3><p><strong>Nonsingular</strong> terminal sliding mode control for a quadrotor UAV with a total rotor failure</p>
+<h4 id="1模型-1">1.模型
+</h4><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h4 id="2控制器-1">2.控制器
+</h4><!-- raw HTML omitted -->
+<p>Inner controller</p>
+<p>滑模面 $[z_d,\phi_d,\theta_d]$</p>
+<!-- raw HTML omitted -->
+<p>控制输入：</p>
+<!-- raw HTML omitted -->
+<p>outer controller</p>
+<p>滑模面$[x_d,y_d]$</p>
+<!-- raw HTML omitted -->
+<h3 id="二lin-xing-xu-2020-被引63">二、Lin-Xing Xu ，2020 被引：63
+</h3><p>Backstepping Sliding-Mode and Cascade Active Disturbance Rejection Control for a Quadrotor UAV</p>
+<p>ADRC + 反步滑模</p>
+<h4 id="1动力学模型-1">1.动力学模型
+</h4><p>数学模型不简化</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h4 id="2控制器-2">2.控制器
+</h4><p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303070959480.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230307095937395"
+	
+	
+></p>
+<h5 id="级联adrc姿态轨迹跟踪控制">级联ADRC姿态轨迹跟踪控制
+</h5><p>$x_{1,1} = \phi, x_{1,2} = p, x_{2,1} = \theta, x_{2,2} = q, x_{3,1} = \psi, x_{3,2} = r$</p>
+<p>姿态子系统：</p>
+<!-- raw HTML omitted -->
+<p>$w_{i,1}$为扩张状态量，$e_{i,2}=w_{i,1}$</p>
+<!-- raw HTML omitted -->
+<p>ESO</p>
+<!-- raw HTML omitted -->
+<h1 id="风扰建模">风扰建模
+</h1><h2 id="waslander--2009-被引242">Waslander  ，2009 被引：242
+</h2><p>Wind Disturbance Estimation and Rejection for Quadrotor Position Control</p>
+<h3 id="1无人机动力学模型">1.无人机动力学模型
+</h3><p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303081650460.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230308165016352"
+	
+	
+></p>
+<p>无人机合力和合力矩</p>
+<!-- raw HTML omitted -->
+<p>动力学模型</p>
+<!-- raw HTML omitted -->
+<p>每个旋翼产生的推力(转子推力静态模型)</p>
+<!-- raw HTML omitted -->
+<p>其中$V_i$电机电压，$C_h$悬停状态下的推力系数，$\frac{T_i}{T_h} = C_\infty$为推力比，$T_i$由迎角$\alpha$，来流速度$v_\infty$和悬停时推力产生的诱导速度$v_i$产生，$T_h$表示电机施加相同电压。迎角$\alpha = f_\alpha(v_\infty,\Theta)$表示机身$x-y$平面与来流速度的夹角。</p>
+<p>感应速度定义了整个转子平面上空速的变化，并根据飞行条件进行不同的建模，但它是自由流速度、迎角和施加到电机的电压的函数（它决定了悬停条件下的感应速度）。推力比重写为
+$$
+\frac{T_i}{T_h} = C_\infty(v_\infty,\Theta,V_i)
+$$
+叶片拍打导致推力矢量的方向发生变化，远离$\hat{z}$轴，由于前进和后退叶片上产生的推力不平衡引起的。因为只会发生非常小的偏转，因此可以使用小角度近似。由于叶片对反向旋转，这种效应产生的侧向力被抵消，只需要考虑水平效应。结果是一个水平推力分量，可以对所有四个转子$T_l$求和，并且线性依赖于自由流速度</p>
+<!-- raw HTML omitted -->
+<p>其中$K_{bf}$是叶片拍打系数，其水平力作用在$\hat{e}_h$方向上，转子平面与机身不垂直也会产生力矩。</p>
+<p>机身阻力和转子阻力可以简单建模为惯性系的单个力$D$。</p>
+<!-- raw HTML omitted -->
+<p>其中$C_D$是实验确定的阻力总系数，标称速度线性化在$C_D$的定义中。</p>
+<p>电机产生推力所需的空气动力扭矩</p>
+<!-- raw HTML omitted -->
+<p>其中$C_\tau$为总扭矩系数，</p>
+<p>水平力矩由叶片拍打产生，建模为</p>
+<!-- raw HTML omitted -->
+<p>其中$\kappa_{bfm}$叶片摆动力矩的总系数，将固定叶片偏转产生的力矩与推力矢量偏转产生的力矩相结合。</p>
+<h3 id="无人机测量模型">无人机测量模型
+</h3><p>磁力计，提供惯性坐标的磁场方向</p>
+<!-- raw HTML omitted -->
+<p>其中$\mu_l$为在机身上测量的磁场。</p>
+<p>加速度计测量作用在机身上的力，测量除了重力以外的所有力。</p>
+<!-- raw HTML omitted -->
+<p>其中$r_A$为重心到加速度计在惯性坐标系中位置的矢量，实际上可以忽略，简化模型为</p>
+<!-- raw HTML omitted -->
+<p>定义基础无人机测量模型，状态向量</p>
+<!-- raw HTML omitted -->
+<p>控制输入</p>
+<!-- raw HTML omitted -->
+<p>EKF将上述测量值组合成状态估计值</p>
+<!-- raw HTML omitted -->
+<p>$d$是惯性坐标系中的高度，$d_{ref}$是地面高度。</p>
+<p>此处定义的测量模型仍然存在一个关键困难，并且与定义加速度计推力模型的复杂非线性关系有关。在实践中，很难线性化推力方程，因此经常采用简化，忽略推力产生的推力对自由流速度的依赖性。此假设可得出低速操作的合理估计值，但当加速度计测量值与模型的预期值有很大差异时，可能会导致发散。这个问题仍然是正在调查的领域</p>
+<h3 id="风模型">风模型
+</h3><p>由静态主导风向、强度模型和一个依赖于标准功率谱密度（PSD）的阵风模型组成</p>
+<p>静态分量可以用基站的气象观测进行初始化，并假定其变化的时间尺度略大于飞行器飞行时间的尺度。带有PSD的阵风模型源自德莱顿模型，依靠静态风模型为PSD生成必要的参数。
+对于静态模型，假设风速$v_w$在整个飞行过程中是恒定的。包括平均风速大小的高度依赖性，以考虑开阔地形中的边界层效应，</p>
+<!-- raw HTML omitted -->
+<p>其中$z$为无人机距地表高度，$z_0$为roughness length，$k$为von K´arm´an  常数，$v_w^*$是地球表面的摩擦速度（friction velocity from the earth’s surface）。$v_w(z)$是在高度$z$的风速。</p>
+<p>上式的上界$\overline{z}$:</p>
+<!-- raw HTML omitted -->
+<p>其中$b$是尺度常数，$\phi_l$是纬度，$\omega_e$是地球南北极轴线的角速度。前两个方程用于确定地球表面边界层内给定高度处的平均风速的大小。</p>
+<p>Dryden wind gust model定义为正弦激励的和</p>
+<!-- raw HTML omitted -->
+<p>确定风速的唯一方法依赖于加速度计数据的使用。在给定当前状态和输入的情况下，任何与应该产生的加速度的偏差都可以主要归因于风的扰动。为了形成易于处理的风速估计，需要进行两个简化。首先，试图利用完整的德莱顿风阵风模式来估算阵风动力是不切实际的，风估计是以一种无记忆的方式进行的。</p>
+<p>风速的估计是无记忆的，但以前的风速估计是用来预测当前产生的推力。在这两种情况下，依赖于低带宽变化的风被用来证明假设。</p>
+<h2 id="ramirez-rodriguez2014-被引156">Ramirez-Rodriguez，2014 被引：156
+</h2><p>Robust Backstepping Control Based on Integral Sliding Modes for Tracking of Quadrotors</p>
+<h3 id="4-application-to-a-quadrotor">4 Application to a Quadrotor
+</h3><h4 id="气动干扰力">气动干扰力
+</h4><p>有界风扰动$d_\xi(t)=[d_x,d_y,d_z]^T$和$d_\eta(t)=[d_\phi,d_\theta,d_\psi]^T$</p>
+<p>风向速度矢量作为气动坐标系A，B为机体坐标系。旋转矩阵$W:B\rightarrow A$</p>
+<!-- raw HTML omitted -->
+<p>$\alpha$为迎角，$\beta$为侧滑角。</p>
+<p>悬停期间：</p>
+<!-- raw HTML omitted -->
+<p>其中$L,Y,D$为气动力的升力，侧向力和阻力系数</p>
+<h4 id="陀螺和气动力矩干扰">陀螺和气动力矩干扰
+</h4><!-- raw HTML omitted -->
+<p>陀螺力矩：</p>
+<!-- raw HTML omitted -->
+<p>其中$I_{ri}$为电机转动惯量。</p>
+<p>气动力矩：</p>
+<!-- raw HTML omitted -->
+<p>其中$\Gamma_l,\Gamma_m,\Gamma_n$空气动力学的滚动，俯仰和偏航力矩。</p>
+<h4 id="纵向运动">纵向运动
+</h4><!-- raw HTML omitted -->
+<p>螺旋桨侧风的合计速度</p>
+<!-- raw HTML omitted -->
+<p>前向飞行中的合成风速导致攻角</p>
+<!-- raw HTML omitted -->
+<h4 id="方向运动">方向运动
+</h4><!-- raw HTML omitted -->
+<p>侧滑角</p>
+<!-- raw HTML omitted -->
+<p>偏航力矩：</p>
+<!-- raw HTML omitted -->
+<p>参数：</p>
+<!-- raw HTML omitted -->
+<h2 id="lei2020">LEI，2020
+</h2><p>Aerodynamic Performance of a Quadrotor MAV Considering the Horizontal Wind</p>
+<h3 id="理论分析">理论分析
+</h3><h4 id="a四转子气动干扰模型">A.四转子气动干扰模型
+</h4><p>微型飞行器在高度为20米时的最大风速一般不超过5米/秒。当风速大于5米/秒时，需要更多的能量和更大的攻角来保持飞机的稳定性。</p>
+<!-- raw HTML omitted -->
+<p>考虑水平风的气动干扰模型如图1所示。结果表明，由于水平风的作用，四旋翼的下洗流动（downwash flow）明显偏离风向。下洗流的漂移造成了前后转子之间的强烈相互作用，即使相邻转子之间已经存在空气动力干扰。</p>
+<h4 id="b转子阵风模型">B.转子阵风模型
+</h4><!-- raw HTML omitted -->
+<p>与没有入流(incoming flow)相比，假设水平风与转子盘面平行，因此入流量（inflow）会因入流速度与转子转速的叠加而改变。假定转子为顺时针方向，叶片速度分布受水平风的影响如图2所示。</p>
+<p>在$r$处的合速度：</p>
+<!-- raw HTML omitted -->
+<p>其中$\Omega,v,\beta$为角速度，来流速度和桨叶方位角。R 是转子半径，r 是到转子中心的距离。$\beta$在90°时u达到最大值，也适用于水平入流速度（horizontal inflow velocity），叶尖产生的推力和速度也是最大的。而270度时，它们是最小的，这可能导致叶片表面的气流分离。</p>
+<!-- raw HTML omitted -->
+<p>四旋翼无人机在水平风下会被推翻或偏航，这将导致额外的推力$T_{Wi}$为每个旋翼。转子的阵风模型如图3所示。每个转子的总推力:</p>
+<!-- raw HTML omitted -->
+<p>$T_{Wi}$为因为阵风产生的附加推力 。$T_{Mi}=b\Omega_i^2$是电机i产生的推力。</p>
+<p>总推力可以定义如下：</p>
+<blockquote>
+<p>A novel robust attitude control for quadrotor aircraft subject to actuator faults and wind gusts</p>
+</blockquote>
+<!-- raw HTML omitted -->
+<p>其中$\rho,A,V_p,\hat{V}$是空气密度，螺旋桨面积，转子感应速度和通过转子和风速$V_w$产生的总感应速度。</p>
+<p>总诱导速度$\hat{V}$：</p>
+<!-- raw HTML omitted -->
+<p>其中$\alpha$是转子轴线与风向之间的夹角，当$\alpha=90°$时，风与地面平行。总诱导速度$\hat{V}$：</p>
+<!-- raw HTML omitted -->
+<p>气动阻力$\tau_{drag}$可以定义为:</p>
+<!-- raw HTML omitted -->
+<p>考虑到每个转子的额外推力$T_{Wi}$也会产生额外的风力矩，推力可表示为:</p>
+<!-- raw HTML omitted -->
+<p>其中$l$是无人机中心和转子中心之间的距离。</p>
+<p>为了表征四旋翼在风扰作用下的飞行效率，本文引入了功率负载power loading (PL)概念：</p>
+<!-- raw HTML omitted -->
+<p>其中$C_T,C_P,\Omega,R$分别是推力系数、功率系数、转速和转子半径。</p>
+<!-- raw HTML omitted -->
+<p>其中$T,P$是推力和功率</p>
+<p>功率负载power loading可以简化为：</p>
+<!-- raw HTML omitted -->
+<p>从上述方程可以看出，推力越大或功率越小，可以获得更大的功率负载，这将促进更好的气动性能的四旋翼。</p>
+<h2 id="yuying-guo-2018">Yuying Guo ，2018
+</h2><p>A Novel Robust Attitude Control for Quadrotor Aircraft Subject to Actuator Faults and Wind Gusts</p>
+<h3 id="阵风模型">阵风模型
+</h3><p>水平风作用下，总推力:$f_{Ti} = f_{Wi} + f_{Mi}$</p>
+<!-- raw HTML omitted -->
+<p>气动阻力 $\tau_{drag}=\frac {\rho AV_w^2}{2}$</p>
+<h2 id="je-young-hwang2015">Je Young Hwang，2015
+</h2><p>Numerical Study of Aerodynamic Performance of a Multirotor Unmanned-Aerial-Vehicle Configuration</p>
+<h2 id="duc-hung-nguyen2018">Duc Hung NGUYEN，2018
+</h2><p>Experimental Study for Aerodynamic Performance of Quadrotor Helicopter</p>
+<p>​		为了获得阵风响应，有必要阐明非定常气动特性，其中应包括稳态气动特性，如推力系数和风阻系数。</p>
+<p>​		利用动量理论和叶片单元理论对单旋翼常规直升机的气动特性进行了研究。在以前的研究中，传统的理论已经被应用于预测 MRH 的性能。2,3)然而，据作者所知，很少有关于系统风洞实验的研究已经发表，以验证传统理论在 MRH 空气动力学中的应用。为了在传统理论的基础上预测无人机的性能，需要考虑两个问题:<strong>低雷诺数流动效应</strong>、<strong>相邻转子间的气动干涉</strong></p>
+<p>​		首先是低雷诺数流动效应。今天广泛使用的 MRH 比常规载人直升机体积更小，飞行速度更慢。流经旋翼的雷诺数为103至104，而传统直升机的雷诺数约为106。众所周知，这种低雷诺数的流动与高雷诺数的流动完全不同，并且对雷诺数十分敏感。4)近年来，人们对这种低雷诺流动的翼型气动特性进行了积极的研究。5)然而，对任意形状转子的气动特性进行预测仍然很困难，在风洞实验中有必要对其进行仔细的测量。</p>
+<p>​		二是相邻转子之间的气动干涉。在磁流变液中，多个转子在一个平面上与一个小间隙相连。转子之间的气动干涉还没有得到很好的理解。研究了特殊结构(如奇努克 CH-47串联旋翼直升机)中串联旋翼干涉的基本特征。6)即使没有重叠，就像大多数 MRHs 的情况一样，流入后旋翼的气流应该受到前旋翼在前飞过程中诱导气流的影响。然而，就作者所知，很少有研究通过风洞实验来阐明磁共振波导的干扰效应。因此，用简单的解析方法建立干涉效应模型并进行实验验证是非常有用的。
+​		MRH 的整体空气动力学性能是由上述特征决定的。为了研究单旋翼、串联旋翼和四旋翼直升机在均匀流场中的气动特性，本文进行了一系列风洞试验。通过对常规理论和实验结果的比较，建立了考虑低 Re 流动效应和旋翼间干扰的四旋翼直升机气动系数的数学模型。相信本文的研究结果将对未来 MRH 飞行动力学和控制系统设计的研究产生重要影响。</p>
+<h3 id="理论模型">理论模型
+</h3><p>​	该模型以动量理论和叶片单元理论为基础 。</p>
+<p>​	在<strong>动量理论</strong>中，流动假定为不可压缩的无粘流动，叶片载荷假定为均匀分布在叶片上。诱导速度 v 和推力 T 的公式如下:</p>
+<!-- raw HTML omitted -->
+<p>其中$v_h$为悬停时的诱导速度，合速度$V$表示为：</p>
+<!-- raw HTML omitted -->
+<p>​		叶片单元理论建立在忽略失速的升力线假设的基础上。1)气动力计算在每一个无限小的宽度dy旅行，如图1所示。图2定义了叶片截面的几何形状、速度和气动力。所述叶片截面具有从旋转平面测得的节距角$\theta$ 和流入角$\phi$。刀锋部分的迎角是$\alpha = \theta-\phi$。作用在转子叶片上的单元力如图3所示。图4显示了拖曳力(drag foece)的组成部分。</p>
+<!-- raw HTML omitted -->
+<p>advance ratio的定义为</p>
+<!-- raw HTML omitted -->
+<p>入流比$\lambda$为</p>
+<!-- raw HTML omitted -->
+<p>无量纲速度分量定义为</p>
+<!-- raw HTML omitted -->
+<h4 id="推力系数">推力系数
+</h4><p>电机推力系数定义为</p>
+<!-- raw HTML omitted -->
+<p>其中$B$为叶端损失系数。</p>
+<p>假定pitch角线性扭曲（linearly twisted）</p>
+<!-- raw HTML omitted -->
+<p>$\sigma$定义为</p>
+<!-- raw HTML omitted -->
+<p>经过长时间的计算(lengthy calculation) ，推力系数转化为</p>
+<!-- raw HTML omitted -->
+<p>假设等齐缠度constant twist 为$\theta = \theta_{avg}$，上式退化为</p>
+<!-- raw HTML omitted -->
+<p>入流比计算</p>
+<p>​		基于动量理论的推力系数计算</p>
+<!-- raw HTML omitted -->
+<p>等效上面两式，入流比：</p>
+<!-- raw HTML omitted -->
+<h4 id="阻力系数">阻力系数
+</h4><p>阻力可以分为三个部分: 诱导阻力、剖面阻力和寄生阻力（induced drag, profile drag and parasite drag）。</p>
+<p>水平力分量是</p>
+<!-- raw HTML omitted -->
+<p>用表达式代替$dF_x$和$dF_y$</p>
+<!-- raw HTML omitted -->
+<p>其中第一项对应于剖面阻力，第二项对应于诱导阻力</p>
+<p><strong>剖面阻力</strong>定义为</p>
+<!-- raw HTML omitted -->
+<p>假设$C_d = C_{d0}$为常数，则</p>
+<!-- raw HTML omitted -->
+<p><strong>诱导风阻</strong>系数的定义是</p>
+<!-- raw HTML omitted -->
+<p>拍打角度（flapping angle）可以表示为方位角的第一个调和(harmonic)函数</p>
+<p>与大多数传统直升机不同，四旋翼使用的是刚性、固定螺距的旋翼桨叶。</p>
+<!-- raw HTML omitted -->
+<p>经过长时间的计算(lengthy calculation) ，诱导风阻系数转化为</p>
+<!-- raw HTML omitted -->
+<p>水平力系数</p>
+<!-- raw HTML omitted -->
+<p>测量阻力对于了解四旋翼在特定攻角和转速(RPM)下能够达到的最大前进速度是必要的。为此，总阻力表示为</p>
+<!-- raw HTML omitted -->
+<p>推力和水平力为</p>
+<!-- raw HTML omitted -->
+<p>寄生阻力应该在风洞试验的基础上制定。最后将四旋翼直升机的总风阻系数公式化为</p>
+<!-- raw HTML omitted -->
+<p>在足够高的推进比下，在转子盘上的一个小圆形区域内产生反向流动。反向流动区域的直径对应于$\mu$，在反向流动的影响可以忽略的情况下小于0.4</p>
+<h4 id="干扰效应">干扰效应
+</h4><h2 id="黄_2019_超强风场下的多旋翼无人机安全控制方法研究">黄_2019_超强风场下的多旋翼无人机安全控制方法研究
+</h2><h3 id="研究现状">研究现状：
+</h3><p>无人机在超强风环境下的安全控制策略的设计主要包括<strong>危险状态的设计</strong>、<strong>风速感知</strong>方法的设计、<strong>机体安全控制方法</strong>的设计、<strong>高度抗扰动方案</strong>设计等多个方面</p>
+<p><strong>风速感知</strong>：对当前风场的环境判断以决策无人机是否适合继续工作，风速是无人机气流流速。</p>
+<p>​		方法：外部传感器直接测量当前风场、通过设计附加的结构或算法根据状态量的变化对当前风场风速进行估计。</p>
+<p>传感器方法会增大无人机受风面积，风速测量不准确。</p>
+<p>估计方法大多在仿真平台上验证。神经网络、自适应观测器、视觉惯性融合结合参照物</p>
+<h3 id="模型">模型
+</h3><p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303200930311.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230320091418385"
+	
+	
+></p>
+<p>针对多旋翼无人机的扰动研究的设计方案一般是通过建立风场模型，并通过建立滑模变结构控制 、 基于时域干扰观测器的控制器等控制结构实现对风场扰动的抑制。</p>
+<p>而针对多旋翼无人机飞行状态的控制研究则是以实际的多旋翼无人机的飞行状态为实际控制指标，通过采用基于扩展状态观测器的扰动和不确定性估计及其衰减策略、模糊控制方法和基于加速度补偿的扰动抑制等方案实现对风场环境的扰动抑制，并达到了更好的实际飞行效果。</p>
+<p>因此，本章通过对螺旋桨拉力产生的原理进行分析，并通过风场环境对多旋翼无人机的扰动建模，借助空气动力学等知识进行分析，推导出了在螺旋桨不失速前提下，多旋翼无人机所能承受的最大风速与多旋翼无人机基本参数的关系，推导出多旋翼无人机的抗风指标系数。</p>
+<h3 id="风场影响">风场影响
+</h3><p>多旋翼无人机依靠螺旋桨的高速旋转和配合产生不同形式的运动。从风场环境对多旋翼无人机机体的影响上看，主要是两个方面，一方面是影响<strong>各个螺旋桨的诱导速度</strong>，一方面是<strong>通过对机体的阻力作用影响</strong>其运动，但是由于机体结构简单，并且重量较轻，因此所受到的风力的影响通常比较小。因此在进行风场环境对多旋翼无人机的影响的分析过程时，通常<strong>只考虑多旋翼无人机高速旋转的螺旋桨上所受到的风力作用</strong>，而忽略机身所受到的风场的影响。</p>
+<p>由于多旋翼无人机的升力产生的原因在于螺旋桨的高速旋转所产生的<strong>上下表面的压力差</strong>，而拉力的变化必然是打破了这种压力差，使得螺旋桨上下表面的压力差发生变化，因此，风场环境对多旋翼无人机的扰动的影响可近似为风场环境导致的高速旋转的螺旋桨上下表面的附加的风速变化，并且直升机是多旋翼无人机的一种特殊形式，因而两者的螺旋桨特性之间存在很大的相似性。并且由于直升机在实际风场环境下的研究都已经较为成熟，因此这里<strong>借鉴直升机对螺旋桨特性的分析</strong>。</p>
+<p>为了简化研究，因而将风速感知的实验风场环境设定为水平变化的超强风环境，不考虑风切变和湍流对多旋翼无人机的扰动作用。</p>
+<p>螺旋桨推力</p>
+<!-- raw HTML omitted -->
+<p>流管分析</p>
+<!-- raw HTML omitted -->
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303211700751.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230321170041649"
+	
+	
+></p>
+<p>截面积与对应的空气流速V之间的关系</p>
+<!-- raw HTML omitted -->
+<p>同一流管内的任一处的截面积S,与对应截面积的空气的流速V成反比</p>
+<p>多旋翼无人机拉力的产生是由于螺旋桨高速旋转时产生的气压差，由于高速旋转的螺旋桨的排压作用会使得螺旋浆的上下表面存在压力差，并且上表面的空气压力小，下表面的空气压力大，这个时候受到螺旋桨高速旋转影响范围内的上表面空气会被螺旋桨高速旋转形成的近似流管吸入并加速向下流动</p>
+<!-- raw HTML omitted -->
+<p>空气进入流管初速度V0，由于流管收缩，空气流速越来越大，在桨盘处诱导速度增大至一个值，假设这个值为V1，通过桨盘后，由于桨叶的排压作用，诱导速度持续增大，在距离桨盘二分之一的螺旋桨半径的距离处，流管的截面积达到最小，流速达到最大V2，到桨盘平面大约5倍的螺旋桨直径的距离时，诱导速度变为0。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>dt时间内空气质量</p>
+<!-- raw HTML omitted -->
+<p>冲量定理</p>
+<!-- raw HTML omitted -->
+<p>拉力做功</p>
+<!-- raw HTML omitted -->
+<p>能量守恒</p>
+<!-- raw HTML omitted -->
+<p>联立：</p>
+<!-- raw HTML omitted -->
+<p>由$F=ma$计算螺旋桨拉力</p>
+<!-- raw HTML omitted -->
+<p>由$dV=V_2-V_0=u_2=2u_1$得：</p>
+<!-- raw HTML omitted -->
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303211724248.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230321172438174"
+	
+	
+></p>
+<p>​		<strong>在风场环境下工作时，多旋翼无人机为了平衡风场扰动对无人机的影响会增大姿态角，但是当遭遇到超强风时，多旋翼无人机除了通过增大姿态角来平衡风场扰动的影响外，由于自身无法抵御强风，机体会具有三轴加速度并开始朝某个方向运动。</strong></p>
+<p>​		在多旋翼无人机的运动过程中，由于风场是变化的，因此多旋翼无人机的姿态角和加速度也会发生变化。基于上面的分析可知，<strong>当风速超过了多旋翼无人机要保持当前状态或者当前位置的抗风极限时，风场环境对多旋翼无人机的影响会以姿态角和加速度的方式表现出来。</strong>
+​		无论是多旋翼无人机为平衡风场环境的阻力而保持的姿态角，还是因超过多旋翼无人机为保持当前状态或当前位置的抗风极限时多旋翼无人机的机体被迫保持姿态角运动并具有的一定的加速度，这些<strong>都和多旋翼无人机的拉力直接或间接相关</strong>。</p>
+<h3 id="实验风场构建">实验风场构建
+</h3><p>使用滚轮和手轮的轴流式风机</p>
+<p>由于自然风所造成的扰动属于低频扰动，因此模拟风场对多旋翼无人机的影响也应该是低频扰动。结合自然界中的风以<strong>常值风和脉动风</strong>这两种类型表现出来，为此，可在距离风机0.3m的地方，通过让风机一直开启和以5秒为间隔进行间歇式开启来构造连续扰动和阵风扰动。</p>
+<p>风速数据采集通过Gill公司生产的WindMaster三维风速仪来完成</p>
+<h2 id="白强强-四旋翼无人机飞行过程中的流场分析-2016">白强强-四旋翼无人机飞行过程中的流场分析-2016
+</h2><h3 id="四旋翼无人机风力影响函数">四旋翼无人机风力影响函数
+</h3><p>旋翼产生的总的空气动力</p>
+<!-- raw HTML omitted -->
+<p>由无风时的旋翼升力$T$和由于风的影响产生的拉力$T_w$组成。</p>
+<h3 id="旋翼气动数值计算">旋翼气动数值计算
+</h3><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><strong>不同飞行状态下旋翼的升力系数和扭矩系数</strong></p>
+<p><img src="https://raw.githubusercontent.com/pikapika-zrf/BlogImg/master/img/202303211559944.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="image-20230321155959853"
+	
+	
+></p>
+<p>单个旋翼：</p>
+<ul>
+<li>随着风速的增加，旋翼上表面压力变小，变化不明显，可以忽略</li>
+</ul>
+<p>​							旋翼下表面压力明显增加</p>
+<p>旋翼上表面压力降低， 下表面压力增加， 旋翼<strong>整体所承受的压力</strong>表现为垂直旋翼旋转平面向旋翼上升方向增加的趋势</p>
+<p>即有风扰动时， 旋翼升力包括两部分， 悬停时旋翼所产生的升力和由于风力作用而产生的额外升力。</p>
+<p>由流线图得， 风干扰对旋翼旋转产生的下洗流影响比较明显， 无风作用时， 下洗流垂直于旋翼旋转平面呈螺旋状向下， 随着风速的增大， 下洗流受风速变化的影响越来越明显， 流速也在不断增加，</p>
+<ul>
+<li>风向角α 随着角度的增加， 旋翼上表面压力变化小幅递减，下表面压力（ 表中第一列） 明显递增， 旋翼升力呈现上升趋势。</li>
+</ul>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<h3 id="四旋翼流场分析">四旋翼流场分析
+</h3><p>气流扰动情况下，旋翼间存在干扰。</p>
+<p>在水平风力作用下（水平风向所指即为风向平行于机身坐标系下x轴方向），随着风速的增加， 机头旋翼的<strong>压力</strong>呈现递增趋势，相较于其他三个旋翼递增趋势明显。机尾旋翼的压力虽然也呈现递增趋势， 但是变化则没有机头旋翼那么明显。机身两侧旋翼的压力增加情况则比较对称， 且压力值明显的介于机头和机尾旋翼之间。</p>
+<p>观察流线图，当风速为 0m/s 时，流线分布垂直于旋翼旋转平面， 流向远方； 当有风作用后， 流线受风力影响在离开旋转平面之后流动呈现螺旋线形状逐渐与风速方向持平；  随着风速达到一定的数值， 流线逐渐的变得紧密</p>
+<!-- raw HTML omitted -->
+<p>各旋翼的升力和扭矩会存在干扰， 并且迎风顺序也在很大程度上影响着旋翼的升力和扭矩。</p>
+<p>机尾受影响最大，误差值20%。机身两侧旋翼10%以下。机头误差5%。</p>
+<h2 id="四旋翼无人机前飞模态特性-叶建川">四旋翼无人机前飞模态特性-叶建川
+</h2><p><strong>前飞模态</strong>的特性， 通过叶素法和风洞试验分析多旋翼无人机在前飞时桨叶和机身气动特性</p>
+<p>气动力模型带入刚体运动学方程中，可得四旋翼无人机在前飞模态下的非线性动力学模型和状态空间模型</p>
+<p>在前飞时桨叶气动力模型与悬停模型存在较大的区别; 四旋翼在前飞模态时存在俯仰/垂向通道的耦合和滚转/偏航通道的耦合。</p>
+<p>notes：无人机风扰分为悬停模态、前飞模态、上升模态、下降模态</p>
+<p>本文：无人机在前飞过程中， 旋翼桨叶<strong>与悬停模态相比较</strong>， 此时不仅产生一个<strong>垂直于桨叶平面的拉力和反扭矩， 同时也产生阻力、俯仰力矩和滚转力矩</strong>。</p>
+<p>基于叶素理论推导出旋翼桨叶在前飞模态时的模型结构，并通过风洞试验获得桨叶和机身在前飞模态下气动力，通过最小二乘法拟合得到机身和桨叶模型的模型参数， 二者相结合即可得出无人机在前飞模态的气动力参数。</p>
+<h3 id="无人机动力学模型">无人机动力学模型
+</h3><p>悬停模态下的无人机桨叶模型可认为只产生<strong>拉力和扭矩</strong>，而前飞模态下旋翼桨叶不仅产生拉力和扭矩，<strong>还产生俯仰力矩、滚转力矩和阻力</strong>。</p>
+<p>垂直前进比和水平前进比：</p>
+<!-- raw HTML omitted -->
+<h5 id="桨叶模型">桨叶模型
+</h5><p>拉力</p>
+<!-- raw HTML omitted -->
+<p>拉力系数</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>阻力$H_p$，侧向力$F_{yp}$，俯仰力矩$M_{yp}$，滚转力矩$M_{xp}$，扭矩$Q_p$</p>
+<p>旋翼桨叶的气动力系数和力矩系数只与$\mu$和$v$相关。其中模型参数( ti、qi、hi、mxi和 myi) 只与
+桨叶的几何外形( 截面翼型， 扭转角和弦长等) 有关。</p>
+<h5 id="机身气动力模型">机身气动力模型
+</h5><p>机身在前飞过程中， 受到了阻力、升力、侧向力以及3个坐标轴方向力矩的作用</p>
+<p>在纵向平面内， 四旋翼无人机呈几何左右对称， 则无人机机身受到的侧向力、滚转力矩以及偏航力矩可忽略不计</p>
+<!-- raw HTML omitted -->
+<p>$c_1$为机身升力系数; $c_d$为机身阻力系数; $c_m$为机身俯仰力矩系数。</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="pikapika-zrf/pikapika-zrf.github.io"
+        issue-term="pathname"
+        
+        label="comment"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 raff
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.3d77866ec2ca96ed309ef0db701e98ee686f9a7761045fe1a6fe807e12eacc91.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
