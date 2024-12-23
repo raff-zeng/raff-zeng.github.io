@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>机器人笔记 on </title>
+        <link>https://raff-zeng.github.io/post/robot-notes/</link>
+        <description>Recent content in 机器人笔记 on </description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>raff</copyright>
+        <lastBuildDate></lastBuildDate><atom:link href="https://raff-zeng.github.io/post/robot-notes/index.xml" rel="self" type="application/rss+xml" />
+    </channel>
+</rss>

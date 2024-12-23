@@ -1,11 +1,84 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Tags on raff Site</title>
-        <link>http://localhost:1313/tags/</link>
-        <description>Recent content in Tags on raff Site</description>
+        <title>Tags on </title>
+        <link>https://raff-zeng.github.io/tags/</link>
+        <description>Recent content in Tags on </description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>zh</language>
-        <copyright>raff</copyright><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+        <language>zh-cn</language>
+        <copyright>raff</copyright>
+        <lastBuildDate>Sun, 01 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://raff-zeng.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Algorithm</title>
+        <link>https://raff-zeng.github.io/tags/algorithm/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/algorithm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>C&#43;&#43;</title>
+        <link>https://raff-zeng.github.io/tags/c&#43;&#43;/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/c&#43;&#43;/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Crazyfile</title>
+        <link>https://raff-zeng.github.io/tags/crazyfile/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/crazyfile/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Crazyswarm</title>
+        <link>https://raff-zeng.github.io/tags/crazyswarm/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/crazyswarm/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Embedded Programming</title>
+        <link>https://raff-zeng.github.io/tags/embedded-programming/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/embedded-programming/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Multi-Thread</title>
+        <link>https://raff-zeng.github.io/tags/multi-thread/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/multi-thread/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Robotics</title>
+        <link>https://raff-zeng.github.io/tags/robotics/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/robotics/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Ros</title>
+        <link>https://raff-zeng.github.io/tags/ros/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/ros/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>校招笔记</title>
+        <link>https://raff-zeng.github.io/tags/%E6%A0%A1%E6%8B%9B%E7%AC%94%E8%AE%B0/</link>
+        <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/tags/%E6%A0%A1%E6%8B%9B%E7%AC%94%E8%AE%B0/</guid>
+        <description></description>
+        </item>
+        
     </channel>
 </rss>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="控制算法面试 1.PID算法原理，如何调PID 算法原理 由比例单元、积分单元、微分单元组成。适用于基本上线性，且动态特性不是时变的系统。\n${\\mathrm {u}}(t)={\\mathrm {MV}}(t)=K_{p}{e(t)}+K_{{i}}\\int {{0}}^{{t}}{e(\\tau )},{d\\tau }+K{{d}}{\\frac {d}{dt}}e(t)$\n比例控制考虑当前误差，误差值乘正常数$K_p$。\n$K_p$大，在相同误差量下，会有较大的输出，但若$K_p$太大，会使系统不稳定。相反的，若$K_p$小，若在相同误差量下，其输出较小，因此控制器会较不敏感的。若$K_p$太小，当有干扰出现时，其控制信号可能不够大，无法修正干扰的影响。\n积分控制考虑过去累计误差，误差值的积分乘正常数$K_i$.\n积分控制会加速系统趋近设定值的过程，并且消除纯比例控制器会出现的稳态误差。$K_i$越大，趋近设定值的速度越快。\n因为积分控制会累计过去所有的误差，可能会出现过冲的情形，需要设定积分饱和，防止在刚开始时，就把积分量积得太大，难以控制。\n微分控制考虑将来误差，误差的一阶导数乘正常数$K_d$。\nD的作用就是让物理量的速度趋于0，只要什么时候，这个量具有了速度，D就向相反的方向用力，尽力刹住这个变化。Kd参数越大，向速度相反方向刹车的力道就越强。\nKd参数对减少控制器短期的改变很有帮助。一些实际中的速度缓慢的系统可以不需要Kd参数。可以提升整定时间及系统稳定性。因为纯微分器不是因果系统，在PID系统实现时，一般会为微分控制加上一个低通滤波器以限制高频增益及噪声.\n不过使用PID控制器不一定保证可达到系统的最佳控制，也不保证系统稳定性。\n调参 通过调整控制参数（比例增益、积分增益/时间、微分增益/时间）让系统达到最佳的控制效果。PID参数调试方式人工调试、齐格勒－尼科尔斯方法。\n若有多个（且互相冲突）的目标（例如高稳定性及快速的暂态时间）都要达到的话，在实际上很难完成。\n调整方式 上升时间 超调量 响应时间 稳态误差 稳定性 $K_p$$\\uparrow$ 减小$\\downarrow$ 增加$\\uparrow$ 小幅增加$\\uparrow$ 减小$\\downarrow$ 变差$\\downarrow$ $K_i$$\\uparrow$ 小幅减小$\\downarrow$ 增加$\\uparrow$ 增加$\\uparrow$ 大幅减小$\\downarrow$ 变差$\\downarrow$ $K_d$$\\uparrow$ 小幅减小$\\downarrow$ 减小$\\downarrow$ 减小$\\downarrow$ 变动不大 变好$\\uparrow$ 齐格勒－尼科尔斯方法是另一种启发式的调试方式，一开始将$K_i$$K_d$设定为0，增加$K_p$直到系统出现等幅振荡，记下增益和振荡周期，按图表方法计算增益。\n高频振荡和低频振荡怎么调 高频振荡，意味着有一个过大的D值放大了噪声，这时应适当的减小D值。如果你的系统有较大的噪声，最好保持D值为0值。\n中频振荡可能就是比例的问题\n2.稳定裕度 幅值裕度是相位为-180度对应的伯德图的幅值距离0dB线的幅值差，是可正可负的。\n相位裕度当频率特性幅值满足 $|KG(j\\omega)|=1$ 时相位超前-180的角度。对于一个稳定系统而言它总应该大于0度。是可正可负的。\n相位裕度增大，会导致系统阻尼增大，从而使得系统的调节时间延长。\nGM&gt;0dB，PM&gt;0度，则闭环系统是稳定的。此结论只适用于Nyquist Plot的半闭合曲线只与单位圆和负半实轴相交一次，且系统开环是稳定的，为最小相位系统。\n稳定裕度越小，闭环系统越接近于临界稳定，响应曲线容易产生超调和震荡、调整时间长，响应性能指标也不满足要求。\n3.带宽 带宽高。响应好，噪声大\n带宽大的系统响应速度会快，对高频的正常激励信号有响应，也会带来很多副作用，会对噪声敏感。带宽低，对高频噪声的放大系数很低。\n高带宽系统需要更高速度的传感器和控制器，一般控制器和传感器的速度应该是被控对象的5-20倍。是硬件成本高，对数值计算的精度也更高，对于延迟的忍耐度也更低。\n4.LQR 线性二次调节器 线性二次（LQ）问题:系统动态可以用一组线性微分方程表示，成本为二次泛函\n成本函数一般会定义为状态量和理想值的偏差的和。控制量的大小也会包括在成本函数中。LQR难点在找合适的加权因子。\n令代价函数最小化。给出QR，根据黎卡积方程算出K，得到控制输入u。\nMPC 模型预测控制 模型预测控制的特点是每一次针对目前的时间区块内作最佳化，然后下一个时间再针对时间区块内作最佳化，模型预测控制可以预测未来事件并且进行对应的处理。模型预测控制几乎都是用数位控制来实现，\n">
+<title>控制算法面试</title>
+
+<link rel='canonical' href='https://raff-zeng.github.io/post/reading-notes/notes-at-school/controlinterview/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="控制算法面试">
+<meta property='og:description' content="控制算法面试 1.PID算法原理，如何调PID 算法原理 由比例单元、积分单元、微分单元组成。适用于基本上线性，且动态特性不是时变的系统。\n${\\mathrm {u}}(t)={\\mathrm {MV}}(t)=K_{p}{e(t)}+K_{{i}}\\int {{0}}^{{t}}{e(\\tau )},{d\\tau }+K{{d}}{\\frac {d}{dt}}e(t)$\n比例控制考虑当前误差，误差值乘正常数$K_p$。\n$K_p$大，在相同误差量下，会有较大的输出，但若$K_p$太大，会使系统不稳定。相反的，若$K_p$小，若在相同误差量下，其输出较小，因此控制器会较不敏感的。若$K_p$太小，当有干扰出现时，其控制信号可能不够大，无法修正干扰的影响。\n积分控制考虑过去累计误差，误差值的积分乘正常数$K_i$.\n积分控制会加速系统趋近设定值的过程，并且消除纯比例控制器会出现的稳态误差。$K_i$越大，趋近设定值的速度越快。\n因为积分控制会累计过去所有的误差，可能会出现过冲的情形，需要设定积分饱和，防止在刚开始时，就把积分量积得太大，难以控制。\n微分控制考虑将来误差，误差的一阶导数乘正常数$K_d$。\nD的作用就是让物理量的速度趋于0，只要什么时候，这个量具有了速度，D就向相反的方向用力，尽力刹住这个变化。Kd参数越大，向速度相反方向刹车的力道就越强。\nKd参数对减少控制器短期的改变很有帮助。一些实际中的速度缓慢的系统可以不需要Kd参数。可以提升整定时间及系统稳定性。因为纯微分器不是因果系统，在PID系统实现时，一般会为微分控制加上一个低通滤波器以限制高频增益及噪声.\n不过使用PID控制器不一定保证可达到系统的最佳控制，也不保证系统稳定性。\n调参 通过调整控制参数（比例增益、积分增益/时间、微分增益/时间）让系统达到最佳的控制效果。PID参数调试方式人工调试、齐格勒－尼科尔斯方法。\n若有多个（且互相冲突）的目标（例如高稳定性及快速的暂态时间）都要达到的话，在实际上很难完成。\n调整方式 上升时间 超调量 响应时间 稳态误差 稳定性 $K_p$$\\uparrow$ 减小$\\downarrow$ 增加$\\uparrow$ 小幅增加$\\uparrow$ 减小$\\downarrow$ 变差$\\downarrow$ $K_i$$\\uparrow$ 小幅减小$\\downarrow$ 增加$\\uparrow$ 增加$\\uparrow$ 大幅减小$\\downarrow$ 变差$\\downarrow$ $K_d$$\\uparrow$ 小幅减小$\\downarrow$ 减小$\\downarrow$ 减小$\\downarrow$ 变动不大 变好$\\uparrow$ 齐格勒－尼科尔斯方法是另一种启发式的调试方式，一开始将$K_i$$K_d$设定为0，增加$K_p$直到系统出现等幅振荡，记下增益和振荡周期，按图表方法计算增益。\n高频振荡和低频振荡怎么调 高频振荡，意味着有一个过大的D值放大了噪声，这时应适当的减小D值。如果你的系统有较大的噪声，最好保持D值为0值。\n中频振荡可能就是比例的问题\n2.稳定裕度 幅值裕度是相位为-180度对应的伯德图的幅值距离0dB线的幅值差，是可正可负的。\n相位裕度当频率特性幅值满足 $|KG(j\\omega)|=1$ 时相位超前-180的角度。对于一个稳定系统而言它总应该大于0度。是可正可负的。\n相位裕度增大，会导致系统阻尼增大，从而使得系统的调节时间延长。\nGM&gt;0dB，PM&gt;0度，则闭环系统是稳定的。此结论只适用于Nyquist Plot的半闭合曲线只与单位圆和负半实轴相交一次，且系统开环是稳定的，为最小相位系统。\n稳定裕度越小，闭环系统越接近于临界稳定，响应曲线容易产生超调和震荡、调整时间长，响应性能指标也不满足要求。\n3.带宽 带宽高。响应好，噪声大\n带宽大的系统响应速度会快，对高频的正常激励信号有响应，也会带来很多副作用，会对噪声敏感。带宽低，对高频噪声的放大系数很低。\n高带宽系统需要更高速度的传感器和控制器，一般控制器和传感器的速度应该是被控对象的5-20倍。是硬件成本高，对数值计算的精度也更高，对于延迟的忍耐度也更低。\n4.LQR 线性二次调节器 线性二次（LQ）问题:系统动态可以用一组线性微分方程表示，成本为二次泛函\n成本函数一般会定义为状态量和理想值的偏差的和。控制量的大小也会包括在成本函数中。LQR难点在找合适的加权因子。\n令代价函数最小化。给出QR，根据黎卡积方程算出K，得到控制输入u。\nMPC 模型预测控制 模型预测控制的特点是每一次针对目前的时间区块内作最佳化，然后下一个时间再针对时间区块内作最佳化，模型预测控制可以预测未来事件并且进行对应的处理。模型预测控制几乎都是用数位控制来实现，\n">
+<meta property='og:url' content='https://raff-zeng.github.io/post/reading-notes/notes-at-school/controlinterview/'>
+<meta property='og:site_name' content=''>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='c&#43;&#43;' /><meta property='article:tag' content='algorithm' /><meta property='article:tag' content='校招笔记' /><meta property='article:published_time' content='2023-01-01T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-01-01T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="控制算法面试">
+<meta name="twitter:description" content="控制算法面试 1.PID算法原理，如何调PID 算法原理 由比例单元、积分单元、微分单元组成。适用于基本上线性，且动态特性不是时变的系统。\n${\\mathrm {u}}(t)={\\mathrm {MV}}(t)=K_{p}{e(t)}+K_{{i}}\\int {{0}}^{{t}}{e(\\tau )},{d\\tau }+K{{d}}{\\frac {d}{dt}}e(t)$\n比例控制考虑当前误差，误差值乘正常数$K_p$。\n$K_p$大，在相同误差量下，会有较大的输出，但若$K_p$太大，会使系统不稳定。相反的，若$K_p$小，若在相同误差量下，其输出较小，因此控制器会较不敏感的。若$K_p$太小，当有干扰出现时，其控制信号可能不够大，无法修正干扰的影响。\n积分控制考虑过去累计误差，误差值的积分乘正常数$K_i$.\n积分控制会加速系统趋近设定值的过程，并且消除纯比例控制器会出现的稳态误差。$K_i$越大，趋近设定值的速度越快。\n因为积分控制会累计过去所有的误差，可能会出现过冲的情形，需要设定积分饱和，防止在刚开始时，就把积分量积得太大，难以控制。\n微分控制考虑将来误差，误差的一阶导数乘正常数$K_d$。\nD的作用就是让物理量的速度趋于0，只要什么时候，这个量具有了速度，D就向相反的方向用力，尽力刹住这个变化。Kd参数越大，向速度相反方向刹车的力道就越强。\nKd参数对减少控制器短期的改变很有帮助。一些实际中的速度缓慢的系统可以不需要Kd参数。可以提升整定时间及系统稳定性。因为纯微分器不是因果系统，在PID系统实现时，一般会为微分控制加上一个低通滤波器以限制高频增益及噪声.\n不过使用PID控制器不一定保证可达到系统的最佳控制，也不保证系统稳定性。\n调参 通过调整控制参数（比例增益、积分增益/时间、微分增益/时间）让系统达到最佳的控制效果。PID参数调试方式人工调试、齐格勒－尼科尔斯方法。\n若有多个（且互相冲突）的目标（例如高稳定性及快速的暂态时间）都要达到的话，在实际上很难完成。\n调整方式 上升时间 超调量 响应时间 稳态误差 稳定性 $K_p$$\\uparrow$ 减小$\\downarrow$ 增加$\\uparrow$ 小幅增加$\\uparrow$ 减小$\\downarrow$ 变差$\\downarrow$ $K_i$$\\uparrow$ 小幅减小$\\downarrow$ 增加$\\uparrow$ 增加$\\uparrow$ 大幅减小$\\downarrow$ 变差$\\downarrow$ $K_d$$\\uparrow$ 小幅减小$\\downarrow$ 减小$\\downarrow$ 减小$\\downarrow$ 变动不大 变好$\\uparrow$ 齐格勒－尼科尔斯方法是另一种启发式的调试方式，一开始将$K_i$$K_d$设定为0，增加$K_p$直到系统出现等幅振荡，记下增益和振荡周期，按图表方法计算增益。\n高频振荡和低频振荡怎么调 高频振荡，意味着有一个过大的D值放大了噪声，这时应适当的减小D值。如果你的系统有较大的噪声，最好保持D值为0值。\n中频振荡可能就是比例的问题\n2.稳定裕度 幅值裕度是相位为-180度对应的伯德图的幅值距离0dB线的幅值差，是可正可负的。\n相位裕度当频率特性幅值满足 $|KG(j\\omega)|=1$ 时相位超前-180的角度。对于一个稳定系统而言它总应该大于0度。是可正可负的。\n相位裕度增大，会导致系统阻尼增大，从而使得系统的调节时间延长。\nGM&gt;0dB，PM&gt;0度，则闭环系统是稳定的。此结论只适用于Nyquist Plot的半闭合曲线只与单位圆和负半实轴相交一次，且系统开环是稳定的，为最小相位系统。\n稳定裕度越小，闭环系统越接近于临界稳定，响应曲线容易产生超调和震荡、调整时间长，响应性能指标也不满足要求。\n3.带宽 带宽高。响应好，噪声大\n带宽大的系统响应速度会快，对高频的正常激励信号有响应，也会带来很多副作用，会对噪声敏感。带宽低，对高频噪声的放大系数很低。\n高带宽系统需要更高速度的传感器和控制器，一般控制器和传感器的速度应该是被控对象的5-20倍。是硬件成本高，对数值计算的精度也更高，对于延迟的忍耐度也更低。\n4.LQR 线性二次调节器 线性二次（LQ）问题:系统动态可以用一组线性微分方程表示，成本为二次泛函\n成本函数一般会定义为状态量和理想值的偏差的和。控制量的大小也会包括在成本函数中。LQR难点在找合适的加权因子。\n令代价函数最小化。给出QR，根据黎卡积方程算出K，得到控制输入u。\nMPC 模型预测控制 模型预测控制的特点是每一次针对目前的时间区块内作最佳化，然后下一个时间再针对时间区块内作最佳化，模型预测控制可以预测未来事件并且进行对应的处理。模型预测控制几乎都是用数位控制来实现，\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5202140483351697843.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/"></a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/raff-zeng'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/post/tech-blogs/' >
+                
+                
+                
+                <span>技术博客</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/post/robot-notes/' >
+                
+                
+                
+                <span>机器人笔记</span>
+            </a>
+        </li>
+        
+        
+        <li  class='current' >
+            <a href='/post/reading-notes/' >
+                
+                
+                
+                <span>读书笔记</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/test-chinese/' >
+                
+                
+                
+                <span>关于我</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#1pid算法原理如何调pid">1.PID算法原理，如何调PID</a>
+      <ol>
+        <li><a href="#算法原理">算法原理</a></li>
+        <li><a href="#调参">调参</a></li>
+        <li><a href="#高频振荡和低频振荡怎么调">高频振荡和低频振荡怎么调</a></li>
+      </ol>
+    </li>
+    <li><a href="#2稳定裕度">2.稳定裕度</a></li>
+    <li><a href="#3带宽">3.带宽</a></li>
+    <li><a href="#4lqr-线性二次调节器">4.LQR 线性二次调节器</a></li>
+    <li><a href="#mpc-模型预测控制">MPC 模型预测控制</a></li>
+    <li><a href="#smc">SMC</a></li>
+    <li><a href="#adrc">ADRC</a></li>
+    <li><a href="#卡尔曼滤波">卡尔曼滤波</a></li>
+    <li><a href="#观测器">观测器</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/reading-notes/" >
+                Reading-Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/reading-notes/notes-at-school/controlinterview/">控制算法面试</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 01, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="控制算法面试">控制算法面试
+</h1><h2 id="1pid算法原理如何调pid">1.PID算法原理，如何调PID
+</h2><h3 id="算法原理">算法原理
+</h3><p>由比例单元、积分单元、微分单元组成。适用于基本上线性，且动态特性不是时变的系统。</p>
+<p>${\mathrm  {u}}(t)={\mathrm  {MV}}(t)=K_{p}{e(t)}+K_{{i}}\int <em>{{0}}^{{t}}{e(\tau )},{d\tau }+K</em>{{d}}{\frac  {d}{dt}}e(t)$</p>
+<p><strong>比例控制</strong>考虑当前误差，误差值乘正常数$K_p$。</p>
+<p>$K_p$大，在相同误差量下，会有较大的输出，但若$K_p$太大，会使系统不稳定。相反的，若$K_p$小，若在相同误差量下，其输出较小，因此控制器会较不敏感的。若$K_p$太小，当有干扰出现时，其控制信号可能不够大，无法修正干扰的影响。</p>
+<p><strong>积分控制</strong>考虑过去累计误差，误差值的积分乘正常数$K_i$.</p>
+<p>积分控制会加速系统趋近设定值的过程，并且消除纯比例控制器会出现的稳态误差。$K_i$越大，趋近设定值的速度越快。</p>
+<p>因为积分控制会累计过去所有的误差，可能会出现过冲的情形，需要设定积分饱和，防止在刚开始时，就把积分量积得太大，难以控制。</p>
+<p><strong>微分控制</strong>考虑将来误差，误差的一阶导数乘正常数$K_d$。</p>
+<p>D的作用就是让物理量的速度趋于0，只要什么时候，这个量具有了速度，D就向相反的方向用力，尽力刹住这个变化。Kd参数越大，向速度相反方向刹车的力道就越强。</p>
+<p>Kd参数对减少控制器短期的改变很有帮助。一些实际中的速度缓慢的系统可以不需要Kd参数。可以提升整定时间及系统稳定性。因为纯微分器不是因果系统，在PID系统实现时，一般会为微分控制加上一个低通滤波器以限制高频增益及噪声.</p>
+<p>不过使用PID控制器不一定保证可达到系统的最佳控制，也不保证系统稳定性。</p>
+<h3 id="调参">调参
+</h3><p>通过调整控制参数（比例增益、积分增益/时间、微分增益/时间）<strong>让系统达到最佳的控制效果</strong>。PID参数调试方式人工调试、齐格勒－尼科尔斯方法。</p>
+<p>若有多个（且互相冲突）的目标（例如高稳定性及快速的暂态时间）都要达到的话，在实际上很难完成。</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th>调整方式</th>
+          <th>上升时间</th>
+          <th>超调量</th>
+          <th>响应时间</th>
+          <th>稳态误差</th>
+          <th>稳定性</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>$K_p$$\uparrow$</td>
+          <td>减小$\downarrow$</td>
+          <td>增加$\uparrow$</td>
+          <td>小幅增加$\uparrow$</td>
+          <td>减小$\downarrow$</td>
+          <td>变差$\downarrow$</td>
+      </tr>
+      <tr>
+          <td>$K_i$$\uparrow$</td>
+          <td>小幅减小$\downarrow$</td>
+          <td>增加$\uparrow$</td>
+          <td>增加$\uparrow$</td>
+          <td>大幅减小$\downarrow$</td>
+          <td>变差$\downarrow$</td>
+      </tr>
+      <tr>
+          <td>$K_d$$\uparrow$</td>
+          <td>小幅减小$\downarrow$</td>
+          <td>减小$\downarrow$</td>
+          <td>减小$\downarrow$</td>
+          <td>变动不大</td>
+          <td>变好$\uparrow$</td>
+      </tr>
+  </tbody>
+</table></div>
+<p>齐格勒－尼科尔斯方法是另一种启发式的调试方式，一开始将$K_i$$K_d$设定为0，增加$K_p$直到系统出现等幅振荡，记下增益和振荡周期，按图表方法计算增益。</p>
+<h3 id="高频振荡和低频振荡怎么调">高频振荡和低频振荡怎么调
+</h3><p>高频振荡，意味着有一个过大的D值放大了噪声，这时应适当的减小D值。如果你的系统有较大的噪声，最好保持D值为0值。</p>
+<p>中频振荡可能就是比例的问题</p>
+<h2 id="2稳定裕度">2.稳定裕度
+</h2><p><strong>幅值裕度</strong>是相位为-180度对应的伯德图的幅值距离0dB线的幅值差，是可正可负的。</p>
+<p><strong>相位裕度</strong>当频率特性幅值满足 $|KG(j\omega)|=1$ 时相位超前-180的角度。对于一个稳定系统而言它总应该大于0度。是可正可负的。</p>
+<p>相位裕度增大，会导致系统阻尼增大，从而使得系统的调节时间延长。</p>
+<p>GM&gt;0dB，PM&gt;0度，则闭环系统是稳定的。此结论只适用于Nyquist Plot的半闭合曲线只与单位圆和负半实轴相交一次，且系统开环是稳定的，为最小相位系统。</p>
+<p>稳定裕度越小，闭环系统越接近于临界稳定，响应曲线容易产生超调和震荡、调整时间长，响应性能指标也不满足要求。</p>
+<h2 id="3带宽">3.带宽
+</h2><p>带宽高。响应好，噪声大</p>
+<p>带宽大的系统响应速度会快，对高频的正常激励信号有响应，也会带来很多副作用，会对噪声敏感。带宽低，对高频噪声的放大系数很低。</p>
+<p>高带宽系统需要更高速度的传感器和控制器，一般控制器和传感器的速度应该是被控对象的5-20倍。是硬件成本高，对数值计算的精度也更高，对于延迟的忍耐度也更低。</p>
+<h2 id="4lqr-线性二次调节器">4.LQR 线性二次调节器
+</h2><p>线性二次（LQ）问题:系统动态可以用一组线性微分方程表示，成本为二次泛函</p>
+<p>成本函数一般会定义为状态量和理想值的偏差的和。控制量的大小也会包括在成本函数中。LQR难点在找合适的加权因子。</p>
+<p>令代价函数最小化。给出QR，根据黎卡积方程算出K，得到控制输入u。</p>
+<h2 id="mpc-模型预测控制">MPC 模型预测控制
+</h2><p>模型预测控制的特点是每一次针对目前的时间区块内作最佳化，然后下一个时间再针对时间区块内作最佳化，模型预测控制可以预测未来事件并且进行对应的处理。模型预测控制几乎都是用数位控制来实现，</p>
+<p>利用对象的动态模型、过去的控制量、针对滚动预测域的最小化代价函数$J$来计算最佳化的控制讯号</p>
+<p>$\displaystyle J=\sum <em>{i=1}^{N}w</em>{x_{i}}(r_{i}-x_{i})^{2}+\sum <em>{i=1}^{N}w</em>{u_{i}}{\Delta u_{i}}^{2}$</p>
+<p>模型预测控制器和LQR控制器的主要差异是LQR控制器针对整个时间区间进行最佳化，而模型预测控制器针对不同的时间区间分别进行最佳化，因此在不同时间区间内，模型预测控制器可能会产生新的解，而LQR控制器会使用针对所有时间区间下的最佳解。因此模型预测控制器可以在存在硬约束的情形下进行实时的最佳化，不过多半是在较小的时间区域中求解最佳化问题，而不是在整个时间区域内求解，因此有时只能徥到次佳的解。</p>
+<h2 id="smc">SMC
+</h2><p>用不连续的控制信号来调整非线性系统的特性，强迫系统在二个系统的正常状态之间滑动，最后进入稳态。</p>
+<p>滑动模式控制中存在滑动曲面$s=0$，一开始时，系统会在有限时间内到达滑动曲面，之后就会沿着滑动曲面移动。</p>
+<p>实际系统的实现是用高频切换来让系统近似在滑动曲面上滑动，高频切换的控制信号让系统在很邻近滑动曲面的范围内切跳（chatter），而且其频率是不固定的。</p>
+<h2 id="adrc">ADRC
+</h2><p><strong>自抗扰控制</strong>，吸收工程中PID控制，并独立于复杂数学模型提出了一种应对非线性，不确定性和扰动的控制方法。自抗扰控制继承了传统PID控制的优势：误差反馈控制，并且改进了PID控制中的缺点：误差提取法和加权误差。</p>
+<p>自抗扰控制器主要由三部分组成：跟踪微分器(Tracking differentiator)，扩展状态观测器 (Extended state observer) 和非线性组合PID(Nonlinear PID)。</p>
+<p>跟踪微分器解决了快速性和超调之间的矛盾关系，并且提高了调节器应对噪声污染的能力，增强鲁棒性。</p>
+<p>普通状态观测器只观测系统状态，扩展状态观测器还估计外部扰动和未知模型的系统状态。所以此项技术不过于依赖数学模型。</p>
+<p>非线性状态误差反馈控制律</p>
+<h2 id="卡尔曼滤波">卡尔曼滤波
+</h2><p>高效率的递归滤波器（自回归滤波器），它能够从一系列的不完全及包含<a class="link" href="https://zh.wikipedia.org/wiki/%e9%9b%9c%e8%a8%8a_%28%e9%80%9a%e8%a8%8a%e5%ad%b8%29"  target="_blank" rel="noopener"
+    >噪声</a>的<a class="link" href="https://zh.wikipedia.org/wiki/%e6%b5%8b%e9%87%8f"  target="_blank" rel="noopener"
+    >测量</a>中，估计动态系统的状态。卡尔曼滤波会根据各测量量在不同时间下的值，考虑各时间下的<a class="link" href="https://zh.wikipedia.org/wiki/%e8%81%94%e5%90%88%e5%88%86%e5%b8%83"  target="_blank" rel="noopener"
+    >联合分布</a>，再产生对未知变数的估计，因此会比只以单一测量量为基础的估计方式要准。</p>
+<p>卡尔曼滤波是一种<a class="link" href="https://zh.wikipedia.org/wiki/%e9%80%92%e5%bd%92"  target="_blank" rel="noopener"
+    >递归</a>的估计，即只要获知上一时刻状态的估计值以及当前状态的观测值就可以计算出当前状态的估计值，因此不需要记录观测或者估计的历史信息。卡尔曼滤波器与大多数滤波器不同之处，在于它是一种纯粹的<a class="link" href="https://zh.wikipedia.org/wiki/%e6%99%82%e5%9f%9f"  target="_blank" rel="noopener"
+    >时域</a>滤波器，它不需要像<a class="link" href="https://zh.wikipedia.org/wiki/%e4%bd%8e%e9%80%9a%e6%bb%a4%e6%b3%a2%e5%99%a8"  target="_blank" rel="noopener"
+    >低通滤波器</a>等<a class="link" href="https://zh.wikipedia.org/wiki/%e9%a2%91%e5%9f%9f"  target="_blank" rel="noopener"
+    >频域</a>滤波器那样，需要在频域设计再转换到时域实现。</p>
+<h2 id="观测器">观测器
+</h2><p><strong>状态观测器</strong>（英语：State observer）是控制理论中配合受控体的系统，在已知受控体架构的情形下，可以根据受控体的输入及输出而估测其内部的状态</p>
+<p>相位裕度</p>
+<p>伯德图</p>
+<p>时域频域稳定性判据</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+        
+            <a href="/tags/algorithm/">Algorithm</a>
+        
+            <a href="/tags/%E6%A0%A1%E6%8B%9B%E7%AC%94%E8%AE%B0/">校招笔记</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/reading-notes/notes-at-school/cplusplus-basic/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">c&#43;&#43;基础</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/reading-notes/notes-at-school/codealgorithm/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">代码随想录 算法</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/reading-notes/notes-at-school/embedinterview/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">嵌入式面试</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/reading-notes/notes-at-school/multithread/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">并发与多线程 学习笔记</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/reading-notes/notes-at-school/ros-robotics-develop/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ROS机器人开发</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="raff-zeng/raff-zeng.github.io"
+        issue-term="pathname"
+        
+        label="comment"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 raff
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

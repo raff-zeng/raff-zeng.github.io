@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>About Me on </title>
+        <link>https://raff-zeng.github.io/categories/about-me/</link>
+        <description>Recent content in About Me on </description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>raff</copyright>
+        <lastBuildDate>Sat, 30 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://raff-zeng.github.io/categories/about-me/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>About Me</title>
+        <link>https://raff-zeng.github.io/page/about/test-chinese/</link>
+        <pubDate>Sat, 30 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/page/about/test-chinese/</guid>
+        <description>&lt;p&gt;TODO&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
