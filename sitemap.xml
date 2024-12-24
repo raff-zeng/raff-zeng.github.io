@@ -3,10 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://raff-zeng.github.io/</loc>
-    <lastmod>2024-12-20T00:00:00+00:00</lastmod>
+    <lastmod>2024-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raff-zeng.github.io/categories/</loc>
+    <lastmod>2024-12-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raff-zeng.github.io/post/</loc>
-    <lastmod>2024-12-20T00:00:00+00:00</lastmod>
+    <lastmod>2024-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raff-zeng.github.io/tags/ros/</loc>
+    <lastmod>2024-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raff-zeng.github.io/tags/</loc>
+    <lastmod>2024-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raff-zeng.github.io/categories/tech-blogs/</loc>
+    <lastmod>2024-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raff-zeng.github.io/tags/ubuntu/</loc>
+    <lastmod>2024-12-24T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>https://raff-zeng.github.io/post/tech-blogs/linux-start/</loc>
+    <lastmod>2024-12-24T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raff-zeng.github.io/categories/about-me/</loc>
     <lastmod>2024-11-30T00:00:00+00:00</lastmod>
@@ -14,13 +32,7 @@
     <loc>https://raff-zeng.github.io/page/about/test-chinese/</loc>
     <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://raff-zeng.github.io/categories/</loc>
-    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://raff-zeng.github.io/page/</loc>
-    <lastmod>2024-11-30T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raff-zeng.github.io/categories/tech-blogs/</loc>
     <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raff-zeng.github.io/post/reading-notes/</loc>
@@ -32,7 +44,7 @@
     <loc>https://raff-zeng.github.io/post/tech-blogs/</loc>
     <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://raff-zeng.github.io/post/tech-blogs/test-chinese/</loc>
+    <loc>https://raff-zeng.github.io/post/tech-blogs/hugo-start/</loc>
     <lastmod>2024-11-30T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raff-zeng.github.io/post/reading-notes/notes-at-school/</loc>
@@ -68,13 +80,7 @@
     <loc>https://raff-zeng.github.io/tags/robotics/</loc>
     <lastmod>2023-01-01T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://raff-zeng.github.io/tags/ros/</loc>
-    <lastmod>2023-01-01T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://raff-zeng.github.io/post/reading-notes/notes-at-school/ros-robotics-develop/</loc>
-    <lastmod>2023-01-01T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://raff-zeng.github.io/tags/</loc>
     <lastmod>2023-01-01T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://raff-zeng.github.io/post/reading-notes/notes-at-school/multithread/</loc>
