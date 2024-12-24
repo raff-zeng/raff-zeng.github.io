@@ -216,6 +216,8 @@
     <li><a href="#7-markdown文章">7 markdown文章</a>
       <ol>
         <li><a href="#71-设置图片">7.1 设置图片</a></li>
+        <li><a href="#72-md页面配置">7.2 .md页面配置</a></li>
+        <li><a href="#73-页面配置">7.3 页面配置</a></li>
       </ol>
     </li>
   </ol>
@@ -631,7 +633,8 @@
 </span></span><span class="line"><span class="cl">![](reading-notes/notes-at-school/multithread/imgs/multi_thread1.jpg)
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>&mdash;: YAML 格式
+</div><h3 id="72-md页面配置">7.2 .md页面配置
+</h3><p>&mdash;: YAML 格式
 +++: TOML 格式</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -650,10 +653,10 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nn">---</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;2024-11-20T22:00:02+08:00&#39;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">draft</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;Note&#39;</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">searchHidden</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">date</span><span class="p">:</span><span class="w"> </span><span class="ld">2024-11-30</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">draft</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">searchHidden</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">  </span><span class="c"># 允许被搜索</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">menu</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">main</span><span class="p">:</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Home</span><span class="w">
@@ -681,10 +684,10 @@
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-toml" data-lang="toml"><span class="line"><span class="cl"><span class="err">+++</span>
-</span></span><span class="line"><span class="cl"><span class="nx">date</span> <span class="p">=</span> <span class="s1">&#39;2024-11-20T22:00:02+08:00&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="nx">draft</span> <span class="p">=</span> <span class="kc">true</span>
 </span></span><span class="line"><span class="cl"><span class="nx">title</span> <span class="p">=</span> <span class="s1">&#39;Note&#39;</span>
-</span></span><span class="line"><span class="cl"><span class="nx">searchHidden</span> <span class="p">=</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl"><span class="nx">date</span> <span class="p">=</span> <span class="s1">&#39;2024-11-20T22:00:02+08:00&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="nx">draft</span> <span class="p">=</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl"><span class="nx">searchHidden</span> <span class="p">=</span> <span class="kc">false</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="p">[</span><span class="nx">menu</span><span class="p">.</span><span class="nx">main</span><span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="nx">name</span> <span class="p">=</span> <span class="s2">&#34;Home&#34;</span>
@@ -696,7 +699,93 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>推荐使用YAML格式(&mdash;)</p>
-<p>参考：</p>
+<h3 id="73-页面配置">7.3 页面配置
+</h3><p>配置上级页面，列举该文件夹下的页面:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">── tech-blogs
+</span></span><span class="line"><span class="cl">    ├── hugo-start
+</span></span><span class="line"><span class="cl">    │   └── index.md
+</span></span><span class="line"><span class="cl">    └── _index.md
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>_index.md：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title: &#39;技术博客&#39;
+</span></span><span class="line"><span class="cl">date: 2024-11-30
+</span></span><span class="line"><span class="cl">draft: false
+</span></span><span class="line"><span class="cl">type: section
+</span></span><span class="line"><span class="cl">layout: list          # 使用列表布局
+</span></span><span class="line"><span class="cl">searchHidden: false   # 允许被搜索
+</span></span><span class="line"><span class="cl">comments: false       # 禁用评论
+</span></span><span class="line"><span class="cl">menu:
+</span></span><span class="line"><span class="cl">  main:
+</span></span><span class="line"><span class="cl">    name: 技术博客
+</span></span><span class="line"><span class="cl">    weight: 1
+</span></span><span class="line"><span class="cl">    params:
+</span></span><span class="line"><span class="cl">      # icon: home
+</span></span><span class="line"><span class="cl">---
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>tech-blogs/hugo-star/index.md：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-markdown" data-lang="markdown"><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">title: &#39;使用githubPage+hugo无成本建立博客&#39;
+</span></span><span class="line"><span class="cl">date: 2024-11-30
+</span></span><span class="line"><span class="cl">draft: false
+</span></span><span class="line"><span class="cl">slug: test-chinese
+</span></span><span class="line"><span class="cl">searchHidden: false  # 允许被搜索
+</span></span><span class="line"><span class="cl">categories: 
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> tech-blogs
+</span></span><span class="line"><span class="cl">tags:
+</span></span><span class="line"><span class="cl">  <span class="k">-</span> blog
+</span></span><span class="line"><span class="cl">---
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">正文
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>参考：</p>
 <ol>
 <li><a class="link" href="https://zhuanlan.zhihu.com/p/57361697"  target="_blank" rel="noopener"
     >https://zhuanlan.zhihu.com/p/57361697</a></li>
