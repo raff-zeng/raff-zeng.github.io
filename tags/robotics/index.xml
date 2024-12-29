@@ -7,7 +7,105 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>raff</copyright>
-        <lastBuildDate>Sun, 01 Jan 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://raff-zeng.github.io/tags/robotics/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 29 Dec 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://raff-zeng.github.io/tags/robotics/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>MovingRobot_Sim</title>
+        <link>https://raff-zeng.github.io/post/robot-notes/movingrobot_sim/</link>
+        <pubDate>Sun, 29 Dec 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/post/robot-notes/movingrobot_sim/</guid>
+        <description>&lt;h1 id=&#34;0--仿真仓库配置&#34;&gt;0  仿真仓库配置
+&lt;/h1&gt;&lt;p&gt;地址：https://github.com/raff-zeng/MovingRobot_Sim&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 安装docker(不确定直接运行是否正常，建议看内容，手动执行)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker/docker_install.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 拉osrf/ros:humble-desktop-full, 建立容器. (运行不成功则具体看脚本内容)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; ~/MovingRobot_Sim
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker/docker_run.sh prepare
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 编译&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker/docker_run.sh build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h1 id=&#34;1-运行仿真&#34;&gt;1 运行仿真
+&lt;/h1&gt;&lt;p&gt;使用turtlebot4：http://www.turtlebot.net.cn/index.php?catid=72&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://turtlebot.github.io/turtlebot4-user-manual/software/turtlebot4_simulator.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://turtlebot.github.io/turtlebot4-user-manual/software/turtlebot4_simulator.html&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 启动模型与环境&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>轮趣R550-鲁班猫1S机器人</title>
+        <link>https://raff-zeng.github.io/post/robot-notes/wheeltech-robot/</link>
+        <pubDate>Sun, 29 Dec 2024 00:00:00 +0000</pubDate>
+        
+        <guid>https://raff-zeng.github.io/post/robot-notes/wheeltech-robot/</guid>
+        <description>&lt;h2 id=&#34;机型参数&#34;&gt;机型参数
+&lt;/h2&gt;&lt;p&gt;wheelTech R550.&lt;/p&gt;
+&lt;p&gt;STM32F407VET6+鲁班猫1S+深度相机+语音交互&lt;/p&gt;
+&lt;p&gt;自重1.8kg. 负载3kg. 最大速度1.2m/s. 0.45m/s续航7h&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;电机：MG513金属齿轮减速电机&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编码器：500线AB相高精度GMR(巨磁阻)编码器&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;减速比1：30. 额定扭矩1kg.cm.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;雷达：镭神N10P：6-12Hz. 25m. 5400Hz. 0.4°-0.8°. 60Klux&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ASTRA系列RGBD深度相机：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;深度分辨率640×480 30fps 深度0.6m-4m. 视场角58.4°×45.5°&lt;/li&gt;
+&lt;li&gt;RGB分辨率640×480 30fps 视场角63.1°×49.4°&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;鲁班猫1S(RK3566)：1TOPS&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;电池：标称电压10.8V. 满电电压12.6V. 5100mah. 充电电流推荐2A. 充放电接口DC5.5-2.1母头&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;科大讯飞六通道麦克风阵列语言模块&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;野火鲁班猫在线资料文档
+&lt;a class=&#34;link&#34; href=&#34;https://doc.embedfire.com/linux/rk356x/quick_start/zh/latest/README.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://doc.embedfire.com/linux/rk356x/quick_start/zh/latest/README.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;ROS机器人与鲁班猫1S使用手册
+&lt;a class=&#34;link&#34; href=&#34;http://lubancat.wheeltec.net/zh_CN/main/index.html?WHEELTEC&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;http://lubancat.wheeltec.net/zh_CN/main/index.html?WHEELTEC&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;野火鲁班猫openwrt[&lt;a class=&#34;link&#34; href=&#34;https://doc.embedfire.com/openwrt/user_manal/zh/latest/index.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;野火]OpenWrt用户手册—基于鲁班猫LubanCat — [野火]OpenWrt用户手册—基于LubanCat-RK系列板卡 文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        <item>
         <title>ROS机器人开发</title>
         <link>https://raff-zeng.github.io/post/reading-notes/notes-at-school/ros-robotics-develop/</link>
         <pubDate>Sun, 01 Jan 2023 00:00:00 +0000</pubDate>

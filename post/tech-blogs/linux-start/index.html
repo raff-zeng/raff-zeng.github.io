@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="1 换国内源 环境：ubuntu22.04, ros noetic\n1.1 ros1 noetic 1.1.1 换linux源 清华源： https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/\n1 2 3 cd /etc/apt/ sudo cp sources.list sources.list.bak sudo vim sources.list /etc/apt/sources.list:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # 以下安全更新软件源包含了官方源与镜像站配置，如有需要可自行修改注释切换 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # deb-src http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # 预发布软件源，不建议启用 # deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse # # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse 1 2 sudo apt update sudo apt upgrade 1.1.2 换ros源 安装ROS：https://wiki.ros.org/noetic/Installation/Ubuntu\n">
-<title>Ubuntu配置</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" title: &lsquo;Ubuntu配置&rsquo; date: 2024-12-24 draft: false searchHidden: false # 允许被搜索 categories:\ntech-blogs tags: ubuntu ros 1 换国内源 环境：ubuntu22.04, ros noetic\n1.1 ros1 noetic 1.1.1 换linux源 清华源： https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/\n1 2 3 cd /etc/apt/ sudo cp sources.list sources.list.bak sudo vim sources.list /etc/apt/sources.list:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # 以下安全更新软件源包含了官方源与镜像站配置，如有需要可自行修改注释切换 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # deb-src http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # 预发布软件源，不建议启用 # deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse # # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse 1 2 sudo apt update sudo apt upgrade 1.1.2 换ros源 安装ROS：https://wiki.ros.org/noetic/Installation/Ubuntu\n">
+<title></title>
 
 <link rel='canonical' href='https://raff-zeng.github.io/post/tech-blogs/linux-start/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Ubuntu配置">
-<meta property='og:description' content="1 换国内源 环境：ubuntu22.04, ros noetic\n1.1 ros1 noetic 1.1.1 换linux源 清华源： https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/\n1 2 3 cd /etc/apt/ sudo cp sources.list sources.list.bak sudo vim sources.list /etc/apt/sources.list:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # 以下安全更新软件源包含了官方源与镜像站配置，如有需要可自行修改注释切换 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # deb-src http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # 预发布软件源，不建议启用 # deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse # # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse 1 2 sudo apt update sudo apt upgrade 1.1.2 换ros源 安装ROS：https://wiki.ros.org/noetic/Installation/Ubuntu\n">
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="">
+<meta property='og:description' content=" title: &lsquo;Ubuntu配置&rsquo; date: 2024-12-24 draft: false searchHidden: false # 允许被搜索 categories:\ntech-blogs tags: ubuntu ros 1 换国内源 环境：ubuntu22.04, ros noetic\n1.1 ros1 noetic 1.1.1 换linux源 清华源： https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/\n1 2 3 cd /etc/apt/ sudo cp sources.list sources.list.bak sudo vim sources.list /etc/apt/sources.list:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # 以下安全更新软件源包含了官方源与镜像站配置，如有需要可自行修改注释切换 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # deb-src http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # 预发布软件源，不建议启用 # deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse # # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse 1 2 sudo apt update sudo apt upgrade 1.1.2 换ros源 安装ROS：https://wiki.ros.org/noetic/Installation/Ubuntu\n">
 <meta property='og:url' content='https://raff-zeng.github.io/post/tech-blogs/linux-start/'>
 <meta property='og:site_name' content=''>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='ubuntu' /><meta property='article:tag' content='ros' /><meta property='article:published_time' content='2024-12-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-12-24T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Ubuntu配置">
-<meta name="twitter:description" content="1 换国内源 环境：ubuntu22.04, ros noetic\n1.1 ros1 noetic 1.1.1 换linux源 清华源： https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/\n1 2 3 cd /etc/apt/ sudo cp sources.list sources.list.bak sudo vim sources.list /etc/apt/sources.list:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # 以下安全更新软件源包含了官方源与镜像站配置，如有需要可自行修改注释切换 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # deb-src http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # 预发布软件源，不建议启用 # deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse # # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse 1 2 sudo apt update sudo apt upgrade 1.1.2 换ros源 安装ROS：https://wiki.ros.org/noetic/Installation/Ubuntu\n">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' />
+<meta name="twitter:title" content="">
+<meta name="twitter:description" content=" title: &lsquo;Ubuntu配置&rsquo; date: 2024-12-24 draft: false searchHidden: false # 允许被搜索 categories:\ntech-blogs tags: ubuntu ros 1 换国内源 环境：ubuntu22.04, ros noetic\n1.1 ros1 noetic 1.1.1 换linux源 清华源： https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/\n1 2 3 cd /etc/apt/ sudo cp sources.list sources.list.bak sudo vim sources.list /etc/apt/sources.list:\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse # 以下安全更新软件源包含了官方源与镜像站配置，如有需要可自行修改注释切换 deb http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # deb-src http://security.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse # 预发布软件源，不建议启用 # deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse # # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse 1 2 sudo apt update sudo apt upgrade 1.1.2 换ros源 安装ROS：https://wiki.ros.org/noetic/Installation/Ubuntu\n">
     </head>
     <body class="
     article-page
@@ -220,6 +220,16 @@
     </li>
     <li><a href="#13-rawgithubusercontentcom相关错误">1.3 raw.githubusercontent.com相关错误</a></li>
   </ol>
+
+  <ol>
+    <li><a href="#11-ubuntu路径映射到windows的网络盘符">1.1 Ubuntu路径映射到windows的网络盘符</a></li>
+    <li><a href="#12-vmvare配置">1.2 vmvare配置</a>
+      <ol>
+        <li><a href="#121-关闭hyper-v相关">1.2.1 关闭hyper-v相关</a></li>
+        <li><a href="#122-vmvare-tools安装">1.2.2 vmvare tools安装</a></li>
+      </ol>
+    </li>
+  </ol>
 </nav>
         </div>
     </section>
@@ -235,18 +245,10 @@
 
     <div class="article-details">
     
-    <header class="article-category">
-        
-            <a href="/categories/tech-blogs/" >
-                Tech-Blogs
-            </a>
-        
-    </header>
-    
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/post/tech-blogs/linux-start/">Ubuntu配置</a>
+            <a href="/post/tech-blogs/linux-start/"></a>
         </h2>
     
         
@@ -257,19 +259,6 @@
     
     
     <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">Dec 24, 2024</time>
-            </div>
         
 
         
@@ -298,7 +287,22 @@
     <section class="article-content">
     
     
-    <h1 id="1-换国内源">1 换国内源
+    <blockquote>
+<hr>
+<p>title: &lsquo;Ubuntu配置&rsquo;
+date: 2024-12-24
+draft: false
+searchHidden: false  # 允许被搜索
+categories:</p>
+<ul>
+<li>tech-blogs
+tags:</li>
+<li>ubuntu</li>
+<li>ros</li>
+</ul>
+<hr>
+</blockquote>
+<h1 id="1-换国内源">1 换国内源
 </h1><p><strong>环境：ubuntu22.04, ros noetic</strong></p>
 <h2 id="11-ros1-noetic">1.1 ros1 noetic
 </h2><h3 id="111-换linux源">1.1.1 换linux源
@@ -544,20 +548,89 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo sh -c <span class="s1">&#39;echo &#34;185.199.108.133 raw.githubusercontent.com&#34; &gt;&gt; /etc/hosts&#39;</span>
 </span></span></code></pre></td></tr></table>
 </div>
+</div><h1 id="二虚拟机vmvare17-ubuntu2204">二、虚拟机vmvare17-ubuntu2204
+</h1><h2 id="11-ubuntu路径映射到windows的网络盘符">1.1 Ubuntu路径映射到windows的网络盘符
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install samba
+</span></span><span class="line"><span class="cl">sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.bak
+</span></span><span class="line"><span class="cl">sudo vim /etc/samba/smb.conf
+</span></span></code></pre></td></tr></table>
 </div>
+</div><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">[global]
+</span></span><span class="line"><span class="cl">        guest account = raff
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">security = user
+</span></span><span class="line"><span class="cl">[public]
+</span></span><span class="line"><span class="cl">        path = /home/raff
+</span></span><span class="line"><span class="cl">        public = yes
+</span></span><span class="line"><span class="cl">        writeable = yes
+</span></span><span class="line"><span class="cl">        browseable = yes
+</span></span><span class="line"><span class="cl">        guest ok = yes
+</span></span><span class="line"><span class="cl">        create mask = 0644
+</span></span><span class="line"><span class="cl">        acl allow execute always = yes
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>重启samba服务</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/etc/init.d/smbd restart
+</span></span></code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>windows右键此电脑映射网络盘\\192.168.0.100\public</li>
+</ul>
+<blockquote>
+<p>192.168.0.100为到Ubuntu. ifconfig查看的IP地址</p>
+</blockquote>
+<h2 id="12-vmvare配置">1.2 vmvare配置
+</h2><h3 id="121-关闭hyper-v相关">1.2.1 关闭hyper-v相关
+</h3><ul>
+<li>
+<p>win+r，输入<strong>services.msc</strong>(右键此电脑-管理). 禁用所有hyper-v相关服务</p>
+</li>
+<li>
+<p>控制面板-程序与功能-取消虚拟化相关的打勾</p>
+</li>
+<li>
+<p>关闭内核隔离</p>
+</li>
+<li>
+<p>cmd： <code>bcdedit /enum</code>或<code>msinfo32</code> 查看</p>
+</li>
+</ul>
+<h3 id="122-vmvare-tools安装">1.2.2 vmvare tools安装
+</h3><p><code>sudo apt install  open-vm-tools open-vm-tools-desktop</code></p>
+
 </section>
 
 
     <footer class="article-footer">
     
-    <section class="article-tags">
-        
-            <a href="/tags/ubuntu/">Ubuntu</a>
-        
-            <a href="/tags/ros/">Ros</a>
-        
-    </section>
-
 
     </footer>
 
@@ -592,28 +665,6 @@
     
 
     
-
-<aside class="related-content--wrapper">
-    <h2 class="section-title">相关文章</h2>
-    <div class="related-content">
-        <div class="flex article-list--tile">
-            
-                
-<article class="">
-    <a href="/post/tech-blogs/hugo-start/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">使用githubPage&#43;hugo无成本建立博客</h2>
-        </div>
-    </a>
-</article>
-
-            
-        </div>
-    </div>
-</aside>
 
      
     

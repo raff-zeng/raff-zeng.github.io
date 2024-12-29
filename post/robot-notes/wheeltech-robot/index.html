@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="机型参数 wheelTech R550.\nSTM32F407VET6+鲁班猫1S+深度相机+语音交互\n自重1.8kg. 负载3kg. 最大速度1.2m/s. 0.45m/s续航7h\n电机：MG513金属齿轮减速电机\n编码器：500线AB相高精度GMR(巨磁阻)编码器\n减速比1：30. 额定扭矩1kg.cm. 雷达：镭神N10P：6-12Hz. 25m. 5400Hz. 0.4°-0.8°. 60Klux\nASTRA系列RGBD深度相机：\n深度分辨率640×480 30fps 深度0.6m-4m. 视场角58.4°×45.5° RGB分辨率640×480 30fps 视场角63.1°×49.4° 鲁班猫1S(RK3566)：1TOPS\n电池：标称电压10.8V. 满电电压12.6V. 5100mah. 充电电流推荐2A. 充放电接口DC5.5-2.1母头\n科大讯飞六通道麦克风阵列语言模块\n野火鲁班猫在线资料文档 https://doc.embedfire.com/linux/rk356x/quick_start/zh/latest/README.html\nROS机器人与鲁班猫1S使用手册 http://lubancat.wheeltec.net/zh_CN/main/index.html?WHEELTEC\n野火鲁班猫openwrt[野火]OpenWrt用户手册—基于鲁班猫LubanCat — [野火]OpenWrt用户手册—基于LubanCat-RK系列板卡 文档\n">
+<title>轮趣R550-鲁班猫1S机器人</title>
+
+<link rel='canonical' href='https://raff-zeng.github.io/post/robot-notes/wheeltech-robot/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="轮趣R550-鲁班猫1S机器人">
+<meta property='og:description' content="机型参数 wheelTech R550.\nSTM32F407VET6+鲁班猫1S+深度相机+语音交互\n自重1.8kg. 负载3kg. 最大速度1.2m/s. 0.45m/s续航7h\n电机：MG513金属齿轮减速电机\n编码器：500线AB相高精度GMR(巨磁阻)编码器\n减速比1：30. 额定扭矩1kg.cm. 雷达：镭神N10P：6-12Hz. 25m. 5400Hz. 0.4°-0.8°. 60Klux\nASTRA系列RGBD深度相机：\n深度分辨率640×480 30fps 深度0.6m-4m. 视场角58.4°×45.5° RGB分辨率640×480 30fps 视场角63.1°×49.4° 鲁班猫1S(RK3566)：1TOPS\n电池：标称电压10.8V. 满电电压12.6V. 5100mah. 充电电流推荐2A. 充放电接口DC5.5-2.1母头\n科大讯飞六通道麦克风阵列语言模块\n野火鲁班猫在线资料文档 https://doc.embedfire.com/linux/rk356x/quick_start/zh/latest/README.html\nROS机器人与鲁班猫1S使用手册 http://lubancat.wheeltec.net/zh_CN/main/index.html?WHEELTEC\n野火鲁班猫openwrt[野火]OpenWrt用户手册—基于鲁班猫LubanCat — [野火]OpenWrt用户手册—基于LubanCat-RK系列板卡 文档\n">
+<meta property='og:url' content='https://raff-zeng.github.io/post/robot-notes/wheeltech-robot/'>
+<meta property='og:site_name' content=''>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='robotics' /><meta property='article:tag' content='ros' /><meta property='article:published_time' content='2024-12-29T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-12-29T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="轮趣R550-鲁班猫1S机器人">
+<meta name="twitter:description" content="机型参数 wheelTech R550.\nSTM32F407VET6+鲁班猫1S+深度相机+语音交互\n自重1.8kg. 负载3kg. 最大速度1.2m/s. 0.45m/s续航7h\n电机：MG513金属齿轮减速电机\n编码器：500线AB相高精度GMR(巨磁阻)编码器\n减速比1：30. 额定扭矩1kg.cm. 雷达：镭神N10P：6-12Hz. 25m. 5400Hz. 0.4°-0.8°. 60Klux\nASTRA系列RGBD深度相机：\n深度分辨率640×480 30fps 深度0.6m-4m. 视场角58.4°×45.5° RGB分辨率640×480 30fps 视场角63.1°×49.4° 鲁班猫1S(RK3566)：1TOPS\n电池：标称电压10.8V. 满电电压12.6V. 5100mah. 充电电流推荐2A. 充放电接口DC5.5-2.1母头\n科大讯飞六通道麦克风阵列语言模块\n野火鲁班猫在线资料文档 https://doc.embedfire.com/linux/rk356x/quick_start/zh/latest/README.html\nROS机器人与鲁班猫1S使用手册 http://lubancat.wheeltec.net/zh_CN/main/index.html?WHEELTEC\n野火鲁班猫openwrt[野火]OpenWrt用户手册—基于鲁班猫LubanCat — [野火]OpenWrt用户手册—基于LubanCat-RK系列板卡 文档\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5202140483351697843.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/"></a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/raff-zeng'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/archives/' >
+                
+                
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/post/tech-blogs/' >
+                
+                
+                
+                <span>技术博客</span>
+            </a>
+        </li>
+        
+        
+        <li  class='current' >
+            <a href='/post/robot-notes/' >
+                
+                
+                
+                <span>机器人笔记</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/post/reading-notes/' >
+                
+                
+                
+                <span>读书笔记</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/page/about/test-chinese/' >
+                
+                
+                
+                <span>关于我</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#机型参数">机型参数</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/robot-notes/" >
+                Robot-Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/post/robot-notes/wheeltech-robot/">轮趣R550-鲁班猫1S机器人</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Dec 29, 2024</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 1 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="机型参数">机型参数
+</h2><p>wheelTech R550.</p>
+<p>STM32F407VET6+鲁班猫1S+深度相机+语音交互</p>
+<p>自重1.8kg. 负载3kg. 最大速度1.2m/s. 0.45m/s续航7h</p>
+<ul>
+<li>
+<p>电机：MG513金属齿轮减速电机</p>
+</li>
+<li>
+<p>编码器：500线AB相高精度GMR(巨磁阻)编码器</p>
+<ul>
+<li>减速比1：30. 额定扭矩1kg.cm.</li>
+</ul>
+</li>
+<li>
+<p>雷达：镭神N10P：6-12Hz. 25m. 5400Hz. 0.4°-0.8°. 60Klux</p>
+</li>
+<li>
+<p>ASTRA系列RGBD深度相机：</p>
+<ul>
+<li>深度分辨率640×480 30fps 深度0.6m-4m. 视场角58.4°×45.5°</li>
+<li>RGB分辨率640×480 30fps 视场角63.1°×49.4°</li>
+</ul>
+</li>
+<li>
+<p>鲁班猫1S(RK3566)：1TOPS</p>
+</li>
+<li>
+<p>电池：标称电压10.8V. 满电电压12.6V. 5100mah. 充电电流推荐2A. 充放电接口DC5.5-2.1母头</p>
+</li>
+<li>
+<p>科大讯飞六通道麦克风阵列语言模块</p>
+</li>
+</ul>
+<blockquote>
+<p>野火鲁班猫在线资料文档
+<a class="link" href="https://doc.embedfire.com/linux/rk356x/quick_start/zh/latest/README.html"  target="_blank" rel="noopener"
+    >https://doc.embedfire.com/linux/rk356x/quick_start/zh/latest/README.html</a></p>
+<p>ROS机器人与鲁班猫1S使用手册
+<a class="link" href="http://lubancat.wheeltec.net/zh_CN/main/index.html?WHEELTEC"  target="_blank" rel="noopener"
+    >http://lubancat.wheeltec.net/zh_CN/main/index.html?WHEELTEC</a></p>
+<p>野火鲁班猫openwrt[<a class="link" href="https://doc.embedfire.com/openwrt/user_manal/zh/latest/index.html"  target="_blank" rel="noopener"
+    >野火]OpenWrt用户手册—基于鲁班猫LubanCat — [野火]OpenWrt用户手册—基于LubanCat-RK系列板卡 文档</a></p>
+</blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/robotics/">Robotics</a>
+        
+            <a href="/tags/ros/">Ros</a>
+        
+    </section>
+
+
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        renderMathInElement(document.body, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">相关文章</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/post/robot-notes/movingrobot_sim/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">MovingRobot_Sim</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/post/reading-notes/notes-at-school/ros-robotics-develop/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ROS机器人开发</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="raff-zeng/raff-zeng.github.io"
+        issue-term="pathname"
+        
+        label="comment"
+        
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2024 raff
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.29.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
