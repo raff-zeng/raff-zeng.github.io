@@ -532,7 +532,8 @@ tags:&lt;/li&gt;
 &lt;hr&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;1-换国内源&#34;&gt;1 换国内源
-&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;环境：ubuntu22.04, ros noetic&lt;/strong&gt;&lt;/p&gt;
+&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;环境：ubuntu20.04, ros noetic&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ubuntu20:https://releases.ubuntu.com/20.04/&lt;/p&gt;
 &lt;h2 id=&#34;11-ros1-noetic&#34;&gt;1.1 ros1 noetic
 &lt;/h2&gt;&lt;h3 id=&#34;111-换linux源&#34;&gt;1.1.1 换linux源
 &lt;/h3&gt;&lt;p&gt;清华源： &lt;a class=&#34;link&#34; href=&#34;https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -650,7 +651,9 @@ tags:&lt;/li&gt;
 &lt;p&gt;sudo rm /etc/ros/rosdep/sources.list.d/20-default.list&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;12-ros2-humble&#34;&gt;1.2 ros2 humble
-&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;环境：ubuntu24.04, ros2 humble&lt;/strong&gt;&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;环境：ubuntu22.04, ros2 humble&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;ubuntu22: &lt;a class=&#34;link&#34; href=&#34;https://releases.ubuntu.com/22.04/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://releases.ubuntu.com/22.04/&lt;/a&gt;&lt;/p&gt;
 &lt;h3 id=&#34;121-换linux源&#34;&gt;1.2.1 换linux源
 &lt;/h3&gt;&lt;p&gt;清华源： &lt;a class=&#34;link&#34; href=&#34;https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://mirrors.tuna.tsinghua.edu.cn/help/ubuntu/&lt;/a&gt;&lt;/p&gt;
