@@ -57,12 +57,27 @@
 &lt;/table&gt;
 &lt;hr&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 仿真仓库运行turtlebot&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 仿真仓库运行cartographer&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 仿真仓库运行nav2&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; openwrt框架搭建&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; stm32源码编译烧录&lt;/li&gt;
-&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; ubuntu、ros源码编译烧录&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 仿真仓库运行turtlebot&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 仿真仓库运行cartographer&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; slam_toolbox改为cartographer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; 仿真仓库运行nav2&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; openwrt框架搭建&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; stm32源码编译烧录&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; ubuntu、ros源码编译烧录&lt;/p&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 </description>
         </item>
